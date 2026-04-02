@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Swords, Brain, Target, Skull, Trophy, Sparkles, ArrowRight, Zap, Shield, Star } from 'lucide-react';
@@ -32,7 +32,32 @@ const accentClasses = {
   tertiary: { bg: 'bg-tertiary-container/20', text: 'text-tertiary', glow: 'glow-tertiary' },
 };
 
+// Pre-generated particle positions to avoid hydration mismatch
+const particleData = [
+  { id: 0, color: '#7c3aed', left: 15, top: 10, size: 2.5, duration: 7, delay: 1 },
+  { id: 1, color: '#4cd7f6', left: 25, top: 30, size: 3, duration: 8, delay: 2 },
+  { id: 2, color: '#ffb784', left: 40, top: 50, size: 2, duration: 6, delay: 0.5 },
+  { id: 3, color: '#7c3aed', left: 55, top: 20, size: 3.5, duration: 9, delay: 3 },
+  { id: 4, color: '#4cd7f6', left: 70, top: 60, size: 2.2, duration: 7.5, delay: 1.5 },
+  { id: 5, color: '#ffb784', left: 85, top: 40, size: 2.8, duration: 6.5, delay: 4 },
+  { id: 6, color: '#7c3aed', left: 20, top: 70, size: 3.2, duration: 8.5, delay: 2.5 },
+  { id: 7, color: '#4cd7f6', left: 35, top: 85, size: 2.4, duration: 7, delay: 0 },
+  { id: 8, color: '#ffb784', left: 50, top: 15, size: 3, duration: 9.5, delay: 3.5 },
+  { id: 9, color: '#7c3aed', left: 65, top: 75, size: 2.6, duration: 6, delay: 1 },
+  { id: 10, color: '#4cd7f6', left: 80, top: 25, size: 2.9, duration: 8, delay: 4.5 },
+  { id: 11, color: '#ffb784', left: 30, top: 55, size: 2.1, duration: 7.5, delay: 2 },
+  { id: 12, color: '#7c3aed', left: 45, top: 90, size: 3.3, duration: 9, delay: 0.5 },
+  { id: 13, color: '#4cd7f6', left: 60, top: 45, size: 2.7, duration: 6.5, delay: 3 },
+  { id: 14, color: '#ffb784', left: 75, top: 80, size: 2.3, duration: 8.5, delay: 1.5 },
+];
+
 export default function LandingPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Ambient Background Gradients */}
@@ -60,30 +85,32 @@ export default function LandingPage() {
       </div>
 
       {/* Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: Math.random() * 3 + 1.5,
-              height: Math.random() * 3 + 1.5,
-              background: i % 3 === 0 ? '#7c3aed' : i % 3 === 1 ? '#4cd7f6' : '#ffb784',
-              left: `${10 + Math.random() * 80}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -150 - Math.random() * 150],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: 5 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-      </div>
+      {mounted && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {particleData.map((p) => (
+            <motion.div
+              key={p.id}
+              className="absolute rounded-full"
+              style={{
+                width: p.size,
+                height: p.size,
+                background: p.color,
+                left: `${p.left}%`,
+                top: `${p.top}%`,
+              }}
+              animate={{
+                y: [0, -150 - p.duration * 10],
+                opacity: [0, 0.8, 0],
+              }}
+              transition={{
+                duration: p.duration,
+                repeat: Infinity,
+                delay: p.delay,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="relative z-10 px-8 py-12 max-w-6xl mx-auto">
         {/* Hero Section */}

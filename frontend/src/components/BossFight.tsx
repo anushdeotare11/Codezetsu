@@ -11,12 +11,38 @@ interface BossFightProps {
   onDecline: () => void;
 }
 
+// Pre-generated particle data to avoid hydration mismatch
+const bossParticles = [
+  { id: 0, color: '#7c3aed', left: 10, top: 20, size: 4, duration: 4, delay: 0.5, yMove: 150 },
+  { id: 1, color: '#ff4444', left: 25, top: 40, size: 5, duration: 5, delay: 1, yMove: 200 },
+  { id: 2, color: '#ffb784', left: 40, top: 60, size: 3, duration: 3.5, delay: 0, yMove: 180 },
+  { id: 3, color: '#7c3aed', left: 55, top: 15, size: 4.5, duration: 4.5, delay: 2, yMove: 220 },
+  { id: 4, color: '#ff4444', left: 70, top: 35, size: 3.5, duration: 5.5, delay: 1.5, yMove: 160 },
+  { id: 5, color: '#ffb784', left: 85, top: 55, size: 5.5, duration: 4, delay: 0.5, yMove: 190 },
+  { id: 6, color: '#7c3aed', left: 15, top: 75, size: 4, duration: 3, delay: 2.5, yMove: 170 },
+  { id: 7, color: '#ff4444', left: 30, top: 85, size: 3, duration: 6, delay: 0, yMove: 250 },
+  { id: 8, color: '#ffb784', left: 45, top: 25, size: 5, duration: 4.5, delay: 1, yMove: 200 },
+  { id: 9, color: '#7c3aed', left: 60, top: 70, size: 4.5, duration: 5, delay: 2, yMove: 180 },
+  { id: 10, color: '#ff4444', left: 75, top: 50, size: 3.5, duration: 3.5, delay: 1.5, yMove: 210 },
+  { id: 11, color: '#ffb784', left: 90, top: 30, size: 4, duration: 4, delay: 0.5, yMove: 160 },
+  { id: 12, color: '#7c3aed', left: 20, top: 90, size: 5.5, duration: 5.5, delay: 2.5, yMove: 230 },
+  { id: 13, color: '#ff4444', left: 35, top: 10, size: 3, duration: 3, delay: 0, yMove: 140 },
+  { id: 14, color: '#ffb784', left: 50, top: 45, size: 4.5, duration: 6, delay: 1, yMove: 190 },
+  { id: 15, color: '#7c3aed', left: 65, top: 80, size: 4, duration: 4.5, delay: 2, yMove: 170 },
+  { id: 16, color: '#ff4444', left: 80, top: 65, size: 5, duration: 5, delay: 1.5, yMove: 220 },
+  { id: 17, color: '#ffb784', left: 12, top: 50, size: 3.5, duration: 3.5, delay: 0.5, yMove: 180 },
+  { id: 18, color: '#7c3aed', left: 28, top: 5, size: 4.5, duration: 4, delay: 2.5, yMove: 200 },
+  { id: 19, color: '#ff4444', left: 82, top: 95, size: 4, duration: 5.5, delay: 0, yMove: 240 },
+];
+
 export default function BossFight({ problem, onAccept, onDecline }: BossFightProps) {
   const [bossHP, setBossHP] = useState(100);
   const [showIntro, setShowIntro] = useState(true);
   const [pulseIntensity, setPulseIntensity] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setPulseIntensity((p) => (p + 1) % 100);
     }, 50);
@@ -38,31 +64,33 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
           }}
         >
           {/* Ambient particles */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full"
-                style={{
-                  width: Math.random() * 4 + 2,
-                  height: Math.random() * 4 + 2,
-                  background: i % 3 === 0 ? '#7c3aed' : i % 3 === 1 ? '#ff4444' : '#ffb784',
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -100 - Math.random() * 200],
-                  opacity: [0, 1, 0],
-                  scale: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 3,
-                  repeat: Infinity,
-                  delay: Math.random() * 3,
-                }}
-              />
-            ))}
-          </div>
+          {mounted && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {bossParticles.map((p) => (
+                <motion.div
+                  key={p.id}
+                  className="absolute rounded-full"
+                  style={{
+                    width: p.size,
+                    height: p.size,
+                    background: p.color,
+                    left: `${p.left}%`,
+                    top: `${p.top}%`,
+                  }}
+                  animate={{
+                    y: [0, -p.yMove],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: p.duration,
+                    repeat: Infinity,
+                    delay: p.delay,
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           <motion.div
             initial={{ scale: 0.8, y: 30 }}

@@ -5,12 +5,13 @@ import { motion } from 'framer-motion';
 
 interface SkeletonProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
 // Base skeleton with shimmer animation
-function Skeleton({ className = '' }: SkeletonProps) {
+function Skeleton({ className = '', style }: SkeletonProps) {
   return (
-    <div className={`relative overflow-hidden bg-surface-container-high/50 rounded ${className}`}>
+    <div className={`relative overflow-hidden bg-surface-container-high/50 rounded ${className}`} style={style}>
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
         animate={{ x: ['-100%', '200%'] }}
@@ -261,8 +262,8 @@ export function ArenaSkeleton() {
           </div>
           <div className="flex-1 bg-surface-container-lowest p-4">
             <div className="space-y-2">
-              {[1, 2, 3, 4, 5, 6, 7].map((i) => (
-                <Skeleton key={i} className="h-4" style={{ width: `${50 + Math.random() * 40}%` }} />
+              {[55, 75, 60, 85, 70, 45, 80].map((width, i) => (
+                <Skeleton key={i} className="h-4" style={{ width: `${width}%` }} />
               ))}
             </div>
           </div>
