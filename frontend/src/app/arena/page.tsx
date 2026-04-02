@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Play, Loader2, CheckCircle2, XCircle, AlertCircle, ChevronRight, ChevronLeft, Skull
@@ -8,7 +8,10 @@ import {
 import CodeEditor from '@/components/CodeEditor';
 import ProblemPanel from '@/components/ProblemPanel';
 import BossFight from '@/components/BossFight';
-import { mockProblems } from '@/lib/mockData';
+import XPGainPopup from '@/components/XPGainPopup';
+import LevelUpCelebration from '@/components/LevelUpCelebration';
+import AchievementUnlock from '@/components/AchievementUnlock';
+import { mockProblems, mockAchievements, Achievement } from '@/lib/mockData';
 
 export default function ArenaPage() {
   const [selectedProblemIdx, setSelectedProblemIdx] = useState(0);
@@ -24,6 +27,15 @@ export default function ArenaPage() {
   }>(null);
   const [showBossFight, setShowBossFight] = useState(false);
   const [showProblemList, setShowProblemList] = useState(false);
+  
+  // Animation states
+  const [showXPGain, setShowXPGain] = useState(false);
+  const [xpAmount, setXpAmount] = useState(0);
+  const [bonusText, setBonusText] = useState('');
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [newLevel, setNewLevel] = useState(0);
+  const [showAchievement, setShowAchievement] = useState(false);
+  const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
 
   const problem = mockProblems[selectedProblemIdx];
 
@@ -53,6 +65,38 @@ export default function ArenaPage() {
 
     setResult(mockResult);
     setIsSubmitting(false);
+    
+    // Show XP gain animation for accepted solutions
+    if (mockResult.status === 'accepted') {
+      const earnedXP = problem.difficulty === 'boss' ? 500 : 
+                       problem.difficulty === 'hard' ? 200 : 
+                       problem.difficulty === 'medium' ? 100 : 50;
+      setXpAmount(earnedXP);
+      setBonusText(mockResult.score >= 9 ? 'Perfect Solution Bonus!' : mockResult.score >= 7 ? 'Clean Code Bonus!' : '');
+      setShowXPGain(true);
+      
+      // Hide XP popup after 3 seconds
+      setTimeout(() => setShowXPGain(false), 3000);
+      
+      // Randomly trigger level up (for demo)
+      if (Math.random() > 0.7) {
+        setTimeout(() => {
+          setNewLevel(43);
+          setShowLevelUp(true);
+        }, 1500);
+      }
+      
+      // Randomly unlock achievement (for demo)
+      if (Math.random() > 0.6 && problem.difficulty === 'boss') {
+        setTimeout(() => {
+          const bossAchievement = mockAchievements.find(a => a.key === 'boss_slayer');
+          if (bossAchievement) {
+            setUnlockedAchievement({ ...bossAchievement, unlocked: true });
+            setShowAchievement(true);
+          }
+        }, showLevelUp ? 5000 : 2000);
+      }
+    }
   };
 
   const selectProblem = (idx: number) => {
@@ -67,6 +111,23 @@ export default function ArenaPage() {
 
   return (
     <div className="h-screen flex flex-col">
+      {/* XP Gain Popup */}
+      <XPGainPopup show={showXPGain} xpAmount={xpAmount} bonusText={bonusText} />
+      
+      {/* Level Up Celebration */}
+      <LevelUpCelebration 
+        show={showLevelUp} 
+        newLevel={newLevel} 
+        levelTitle="Architect"
+        onComplete={() => setShowLevelUp(false)}
+      />
+      
+      {/* Achievement Unlock */}
+      <AchievementUnlock
+        achievement={showAchievement ? unlockedAchievement : null}
+        onComplete={() => setShowAchievement(false)}
+      />
+
       {/* Boss Fight Modal */}
       {showBossFight && (
         <BossFight

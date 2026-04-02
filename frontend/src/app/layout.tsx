@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Manrope, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import BottomNav from "@/components/BottomNav";
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
@@ -19,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SkillSprint | The Adaptive Coding Arena",
+  title: "Codezetsu | The Adaptive Coding Arena",
   description: "AI-powered adaptive coding platform. Battle challenges, level up your skills, and climb the leaderboard in the ultimate coding arena.",
 };
 
@@ -31,13 +32,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${manrope.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex">
+      <body className="min-h-full flex pb-16 md:pb-0">
         <Sidebar />
-        <main className="flex-1 ml-[240px] min-h-screen">
+        <main className="flex-1 ml-0 md:ml-[240px] min-h-screen">
           {children}
         </main>
+        <BottomNav />
       </body>
     </html>
   );

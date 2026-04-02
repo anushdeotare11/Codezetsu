@@ -7,7 +7,7 @@ import { LucideIcon, TrendingUp, TrendingDown } from 'lucide-react';
 interface StatsCardProps {
   icon: LucideIcon;
   label: string;
-  value: string | number;
+  value: React.ReactNode;
   trend?: { value: string; positive: boolean };
   accentColor?: 'primary' | 'secondary' | 'tertiary' | 'success';
   delay?: number;

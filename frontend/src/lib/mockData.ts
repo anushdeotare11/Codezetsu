@@ -1,4 +1,4 @@
-// ===== MOCK DATA FOR SKILLSPRINT DEMO =====
+// ===== MOCK DATA FOR CODEZETSU DEMO =====
 
 export interface Problem {
   id: number;
@@ -13,6 +13,7 @@ export interface Problem {
   source: string;
   starterCode: Record<string, string>;
   examples: { input: string; output: string; explanation: string }[];
+  bossImageUrl?: string;
 }
 
 export interface UserProfile {
@@ -85,15 +86,15 @@ export interface LeaderboardEntry {
 // ===== LEVEL THRESHOLDS =====
 export const LEVEL_THRESHOLDS = [
   { level: 1, title: 'Novice Coder', xp: 0 },
-  { level: 2, title: 'Code Apprentice', xp: 200 },
-  { level: 3, title: 'Bug Squasher', xp: 500 },
-  { level: 4, title: 'Algorithm Adept', xp: 1000 },
-  { level: 5, title: 'Data Warrior', xp: 2000 },
-  { level: 6, title: 'Efficiency Expert', xp: 3500 },
-  { level: 7, title: 'Pattern Master', xp: 5500 },
-  { level: 8, title: 'Code Architect', xp: 8000 },
-  { level: 9, title: 'Algorithm Legend', xp: 12000 },
-  { level: 10, title: 'Arena Champion', xp: 18000 },
+  { level: 10, title: 'Code Apprentice', xp: 2000 },
+  { level: 20, title: 'Bug Squasher', xp: 5000 },
+  { level: 30, title: 'Algorithm Adept', xp: 10000 },
+  { level: 40, title: 'Data Warrior', xp: 20000 },
+  { level: 42, title: 'Architect', xp: 42000 },
+  { level: 50, title: 'Efficiency Expert', xp: 60000 },
+  { level: 60, title: 'Pattern Master', xp: 85000 },
+  { level: 80, title: 'Algorithm Legend', xp: 120000 },
+  { level: 100, title: 'Arena Champion', xp: 200000 },
 ];
 
 export function getLevelInfo(level: number) {
@@ -109,28 +110,23 @@ export function getNextLevelXP(level: number): number {
 export const mockProblems: Problem[] = [
   {
     id: 1,
-    title: 'Two Sum',
-    description: `Given an array of integers \`nums\` and an integer \`target\`, return indices of the two numbers such that they add up to \`target\`.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.\n\n**Constraints:**\n- 2 <= nums.length <= 10^4\n- -10^9 <= nums[i] <= 10^9\n- -10^9 <= target <= 10^9\n- Only one valid answer exists.`,
-    difficulty: 'easy',
-    difficultyScore: 2,
-    topics: ['arrays', 'hash_map'],
-    skillsTested: ['data_structures', 'algorithm_knowledge'],
+    title: 'Shadow Protocol',
+    description: `A malicious script has infiltrated the neural link. Your objective is to decrypt the Shadow Protocol by identifying the hidden recursion patterns within the signal stream.\n\n### Technical Specifications\n- Process a stream of nested integer arrays.\n- Extract the sum of all elements at an even depth.\n- Optimize for time complexity O(N).\n- Handle memory overflow for depths exceeding 2048.\n\n**Example:**\nInput: \`[[1, 2], [3, [4, 5]], 6]\` -> Output: \`15\``,
+    difficulty: 'medium',
+    difficultyScore: 6,
+    topics: ['recursion', 'arrays', 'optimization'],
+    skillsTested: ['algorithm_knowledge', 'code_efficiency', 'problem_solving'],
     testCases: [
-      { input: 'nums = [2,7,11,15], target = 9', expected: '[0,1]' },
-      { input: 'nums = [3,2,4], target = 6', expected: '[1,2]' },
-      { input: 'nums = [3,3], target = 6', expected: '[0,1]' },
+      { input: '[[1, 2], [3, [4, 5]], 6]', expected: '15' },
     ],
-    hints: ['Try using a hash map to store seen values.', 'For each number, check if target - number exists in the map.'],
-    source: 'leetcode_dataset',
+    hints: ['Think about tracking the current depth during recursion.', 'Only sum elements when depth % 2 === 0.'],
+    source: 'stitch_generated',
     starterCode: {
-      python: 'def twoSum(nums: list[int], target: int) -> list[int]:\n    # Your code here\n    pass',
-      javascript: 'function twoSum(nums, target) {\n    // Your code here\n}',
-      cpp: 'class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        // Your code here\n    }\n};',
-      java: 'class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Your code here\n    }\n}',
+      python: 'def decryptShadowProtocol(stream: list) -> int:\n    # Your neural decryption here\n    pass',
+      javascript: 'function decryptShadowProtocol(stream) {\n    // Your neural decryption here\n}',
     },
     examples: [
-      { input: 'nums = [2,7,11,15], target = 9', output: '[0,1]', explanation: 'Because nums[0] + nums[1] == 9, we return [0, 1].' },
-      { input: 'nums = [3,2,4], target = 6', output: '[1,2]', explanation: 'Because nums[1] + nums[2] == 6, we return [1, 2].' },
+      { input: '[[1, 2], [3, [4, 5]], 6]', output: '15', explanation: 'Elements at even depths are summed.' },
     ],
   },
   {
@@ -208,21 +204,21 @@ export const mockProblems: Problem[] = [
     examples: [
       { input: 'matrix = [[1,3,1],[1,5,1],[4,2,1]]', output: '12', explanation: 'Path: 1→3→5→2→1 with shadow curse applied on the 3rd step.' },
     ],
+    bossImageUrl: '/images/boss_dragon.png',
   },
 ];
 
-// ===== MOCK USER =====
 export const mockUser: UserProfile = {
-  id: 'usr_demo_001',
-  username: 'shadowcoder42',
-  displayName: 'Shadow Coder',
-  avatarUrl: '',
-  xp: 2350,
-  level: 5,
+  id: 'usr_codezetsu_001',
+  username: 'Codezetsu',
+  displayName: 'Codezetsu',
+  avatarUrl: '/images/user_avatar.png',
+  xp: 12400,
+  level: 42,
   currentStreak: 7,
-  longestStreak: 14,
+  longestStreak: 30,
   lastSolveDate: '2026-04-02',
-  createdAt: '2026-01-15',
+  createdAt: '2026-01-01',
 };
 
 // ===== MOCK SKILLS =====
@@ -239,79 +235,75 @@ export const mockSkills: SkillData[] = [
 export const mockSubmissions: Submission[] = [
   {
     id: 1,
-    problemId: 1,
-    problemTitle: 'Two Sum',
-    code: 'def twoSum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target-n], i]\n        seen[n] = i',
+    problemId: 101,
+    problemTitle: 'Binary Search Optimization',
+    code: '',
     language: 'python',
     status: 'accepted',
-    executionTimeMs: 42,
-    testCasesPassed: 3,
-    totalTestCases: 3,
+    executionTimeMs: 120,
+    testCasesPassed: 10,
+    totalTestCases: 10,
     aiEvaluation: {
       overallScore: 9,
       correctness: 10,
-      efficiency: { timeComplexity: 'O(n)', spaceComplexity: 'O(n)', score: 9 },
+      efficiency: { timeComplexity: 'O(log n)', spaceComplexity: 'O(1)', score: 9 },
       codeQuality: 8,
       edgeCaseHandling: 8,
-      feedback: 'Excellent solution using a hash map. Clean and efficient approach with O(n) time complexity.',
-      weaknesses: ['Could add input validation'],
-      suggestions: ['Consider handling the case where no solution exists'],
+      feedback: 'Excellent optimization of the search space.',
+      weaknesses: [],
+      suggestions: [],
       skillScores: { algorithm_knowledge: 9, data_structures: 9, code_efficiency: 9, edge_cases: 7, readability: 8, problem_solving: 9 },
     },
-    xpEarned: 75,
-    submittedAt: '2026-04-02T14:30:00Z',
+    xpEarned: 150,
+    submittedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: 2,
-    problemId: 2,
-    problemTitle: 'Longest Substring',
+    problemId: 102,
+    problemTitle: 'Load Balancer Logic',
     code: '',
     language: 'python',
     status: 'wrong_answer',
-    executionTimeMs: 38,
-    testCasesPassed: 2,
-    totalTestCases: 4,
+    executionTimeMs: 45,
+    testCasesPassed: 3,
+    totalTestCases: 8,
     aiEvaluation: {
-      overallScore: 5,
-      correctness: 5,
-      efficiency: { timeComplexity: 'O(n²)', spaceComplexity: 'O(n)', score: 4 },
-      codeQuality: 6,
-      edgeCaseHandling: 3,
-      feedback: 'The sliding window approach is partially correct but misses edge cases with empty strings.',
-      weaknesses: ['Empty string not handled', 'Suboptimal time complexity'],
-      suggestions: ['Use a hash map for O(n) solution', 'Check for empty input first'],
-      skillScores: { algorithm_knowledge: 5, data_structures: 6, code_efficiency: 4, edge_cases: 3, readability: 7, problem_solving: 5 },
+      overallScore: 4,
+      correctness: 4,
+      efficiency: { timeComplexity: 'O(n)', spaceComplexity: 'O(n)', score: 5 },
+      codeQuality: 5,
+      edgeCaseHandling: 2,
+      feedback: 'Missing weighted round-robin distribution.',
+      weaknesses: [],
+      suggestions: [],
+      skillScores: { algorithm_knowledge: 4, data_structures: 5, code_efficiency: 5, edge_cases: 2, readability: 6, problem_solving: 4 },
     },
     xpEarned: 0,
-    submittedAt: '2026-04-02T12:15:00Z',
+    submittedAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: 3,
-    problemId: 1,
-    problemTitle: 'Two Sum',
+    problemId: 103,
+    problemTitle: 'JWT Authentication Flow',
     code: '',
     language: 'javascript',
     status: 'accepted',
-    executionTimeMs: 55,
-    testCasesPassed: 3,
-    totalTestCases: 3,
-    aiEvaluation: null,
-    xpEarned: 50,
-    submittedAt: '2026-04-01T18:45:00Z',
-  },
-  {
-    id: 4,
-    problemId: 3,
-    problemTitle: 'Merge K Sorted Lists',
-    code: '',
-    language: 'python',
-    status: 'runtime_error',
-    executionTimeMs: 0,
-    testCasesPassed: 0,
-    totalTestCases: 3,
-    aiEvaluation: null,
-    xpEarned: 0,
-    submittedAt: '2026-04-01T10:00:00Z',
+    executionTimeMs: 60,
+    testCasesPassed: 5,
+    totalTestCases: 5,
+    aiEvaluation: {
+      overallScore: 8,
+      correctness: 10,
+      efficiency: { timeComplexity: 'O(1)', spaceComplexity: 'O(1)', score: 10 },
+      codeQuality: 7,
+      edgeCaseHandling: 7,
+      feedback: 'Secure implementation of token verification.',
+      weaknesses: [],
+      suggestions: [],
+      skillScores: { algorithm_knowledge: 8, data_structures: 6, code_efficiency: 10, edge_cases: 7, readability: 7, problem_solving: 8 },
+    },
+    xpEarned: 300,
+    submittedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
   },
 ];
 

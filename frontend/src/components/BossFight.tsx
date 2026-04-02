@@ -78,13 +78,17 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
             <motion.div
               animate={{ y: [0, -8, 0], rotate: [0, 3, -3, 0] }}
               transition={{ repeat: Infinity, duration: 3 }}
-              className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4"
+              className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-4 overflow-hidden"
               style={{
                 background: 'radial-gradient(circle, rgba(255,68,68,0.3) 0%, rgba(124,58,237,0.2) 100%)',
                 boxShadow: '0 0 30px rgba(255,68,68,0.3)',
               }}
             >
-              <Skull className="w-10 h-10 text-error" />
+              {problem.bossImageUrl ? (
+                <img src={problem.bossImageUrl} alt="Boss" className="w-full h-full object-cover" />
+              ) : (
+                <Skull className="w-10 h-10 text-error" />
+              )}
             </motion.div>
 
             <motion.h1

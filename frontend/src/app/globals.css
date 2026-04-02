@@ -4,39 +4,38 @@
 /* Note: Google Fonts loaded via next/font in layout.tsx */
 
 @theme inline {
-  --color-background: #121222;
-  --color-foreground: #e3e0f8;
-  --font-sans: 'Inter', sans-serif;
+  --color-background: #131315;
+  --color-foreground: #e5e1e4;
+  --font-sans: 'Manrope', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'Space Grotesk', sans-serif;
 
-  /* Surface Hierarchy */
-  --color-surface: #121222;
-  --color-surface-dim: #121222;
-  --color-surface-bright: #38374a;
-  --color-surface-container-lowest: #0c0c1d;
-  --color-surface-container-low: #1a1a2b;
-  --color-surface-container: #1e1e2f;
-  --color-surface-container-high: #29283a;
-  --color-surface-container-highest: #333345;
-  --color-surface-variant: #333345;
+  /* Surface Hierarchy (Neon Monolith) */
+  --color-surface: #131315;
+  --color-surface-dim: #131315;
+  --color-surface-bright: #39393b;
+  --color-surface-container-lowest: #0e0e10;
+  --color-surface-container-low: #1c1b1d;
+  --color-surface-container: #201f21;
+  --color-surface-container-high: #2a2a2c;
+  --color-surface-container-highest: #353437;
+  --color-surface-variant: rgba(53, 52, 55, 0.4);
 
-  /* Primary - Purple */
-  --color-primary: #d2bbff;
-  --color-primary-container: #7c3aed;
-  --color-primary-fixed: #eaddff;
-  --color-on-primary: #3f008e;
-  --color-on-primary-container: #ede0ff;
+  /* Primary - Neon Purple */
+  --color-primary: #ebb2ff;
+  --color-primary-container: #bc13fe;
+  --color-on-primary: #520072;
+  --color-on-primary-container: #ffffff;
 
-  /* Secondary - Neon Cyan */
-  --color-secondary: #4cd7f6;
-  --color-secondary-container: #03b5d3;
-  --color-on-secondary: #003640;
+  /* Secondary - Electric Blue */
+  --color-secondary: #a6e6ff;
+  --color-secondary-container: #14d1ff;
+  --color-on-secondary: #003543;
 
-  /* Tertiary - Fire Orange */
-  --color-tertiary: #ffb784;
-  --color-tertiary-container: #a15100;
-  --color-on-tertiary: #4f2500;
+  /* Tertiary - Data Gold */
+  --color-tertiary: #ffb960;
+  --color-tertiary-container: #a76900;
+  --color-on-tertiary: #472a00;
 
   /* State Colors */
   --color-error: #ffb4ab;
@@ -45,17 +44,17 @@
   --color-warning: #fbbf24;
 
   /* Outline */
-  --color-outline: #958da1;
-  --color-outline-variant: #4a4455;
+  --color-outline: #9d8ba0;
+  --color-outline-variant: rgba(80, 66, 84, 0.15);
 
   /* On Surface */
-  --color-on-surface: #e3e0f8;
-  --color-on-surface-variant: #ccc3d8;
+  --color-on-surface: #e5e1e4;
+  --color-on-surface-variant: #d4c0d7;
 }
 
 :root {
-  --background: #121222;
-  --foreground: #e3e0f8;
+  --background: #131315;
+  --foreground: #e5e1e4;
 }
 
 * {
@@ -341,4 +340,86 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #ccc3d8;
+}
+
+/* ===== MOBILE RESPONSIVENESS ===== */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 1rem;
+  }
+
+  /* Hide sidebar on mobile - will use bottom nav */
+  aside {
+    display: none !important;
+  }
+
+  main {
+    margin-left: 0 !important;
+  }
+
+  .label-competitive {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ===== BOTTOM NAVIGATION (Mobile) ===== */
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(26,26,43,0.98);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(74,68,85,0.2);
+    z-index: 100;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 1rem;
+  }
+}
+
+/* ===== SUCCESS/ERROR RESULT ANIMATIONS ===== */
+@keyframes success-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(74,222,128,0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(74,222,128,0.5);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes error-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.result-success {
+  animation: success-pulse 1s ease-in-out 2;
+}
+
+.result-error {
+  animation: error-shake 0.5s ease-in-out;
+}
+
+/* ===== TOUCH-FRIENDLY IMPROVEMENTS ===== */
+@media (hover: none) and (pointer: coarse) {
+  button, a, .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .btn-primary, .btn-ghost {
+    padding: 0.75rem 1.5rem;
+  }
 }

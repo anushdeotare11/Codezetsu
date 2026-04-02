@@ -126,8 +126,12 @@ export default function Sidebar() {
             className="mx-3 mb-3 p-3 rounded-xl glass-card"
           >
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full bg-primary-container/30 flex items-center justify-center">
-                <Shield className="w-4 h-4 text-primary" />
+              <div className="w-8 h-8 rounded-full overflow-hidden bg-primary-container/30 flex items-center justify-center shrink-0 border border-primary/20">
+                {mockUser.avatarUrl ? (
+                  <img src={mockUser.avatarUrl} alt={mockUser.displayName} className="w-full h-full object-cover" />
+                ) : (
+                  <Shield className="w-4 h-4 text-primary" />
+                )}
               </div>
               <div className="min-w-0">
                 <p className="text-xs font-semibold text-on-surface truncate">{mockUser.displayName}</p>

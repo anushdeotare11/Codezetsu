@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Flame, CheckCircle2, Clock, Target, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -8,6 +8,8 @@ import StatsCard from '@/components/StatsCard';
 import SkillRadar from '@/components/SkillRadar';
 import XPBar from '@/components/XPBar';
 import AchievementBadge from '@/components/AchievementBadge';
+import { DashboardSkeleton } from '@/components/LoadingSkeleton';
+import { StreakFireAnimation } from '@/components/XPGainPopup';
 import { mockUser, mockSkills, mockSubmissions, mockAchievements } from '@/lib/mockData';
 
 function StatusBadge({ status }: { status: string }) {
@@ -47,6 +49,18 @@ function timeAgo(dateStr: string): string {
 }
 
 export default function DashboardPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
+
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6">
       {/* Header */}
@@ -92,7 +106,7 @@ export default function DashboardPage() {
         <StatsCard
           icon={Flame}
           label="Streak"
-          value={`${mockUser.currentStreak} days`}
+          value={<StreakFireAnimation streak={mockUser.currentStreak} />}
           trend={{ value: '+1', positive: true }}
           accentColor="tertiary"
           delay={0.2}
