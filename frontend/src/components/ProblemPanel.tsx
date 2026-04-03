@@ -56,7 +56,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
 
       {/* Description */}
       <div className="prose prose-invert prose-sm max-w-none">
-        {problem.description.split('\n').map((line, i) => {
+        {(problem.description || '').split('\n').map((line, i) => {
           if (line.startsWith('**') && line.endsWith('**')) {
             return <p key={i} className="font-semibold text-on-surface text-sm mt-3">{line.replace(/\*\*/g, '')}</p>;
           }
@@ -85,7 +85,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
       </div>
 
       {/* Examples */}
-      {problem.examples.length > 0 && (
+      {problem.examples && problem.examples.length > 0 && (
         <div className="space-y-3">
           <h3 className="text-sm font-semibold text-on-surface label-competitive">Examples</h3>
           {problem.examples.map((ex, i) => (
@@ -106,7 +106,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
       )}
 
       {/* Hints */}
-      {problem.hints.length > 0 && (
+      {problem.hints && problem.hints.length > 0 && (
         <div>
           <button
             onClick={() => setShowHints(!showHints)}
