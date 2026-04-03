@@ -13,26 +13,26 @@ interface BossFightProps {
 
 // Pre-generated particle data to avoid hydration mismatch
 const bossParticles = [
-  { id: 0, color: '#7c3aed', left: 10, top: 20, size: 4, duration: 4, delay: 0.5, yMove: 150 },
-  { id: 1, color: '#ff4444', left: 25, top: 40, size: 5, duration: 5, delay: 1, yMove: 200 },
-  { id: 2, color: '#ffb784', left: 40, top: 60, size: 3, duration: 3.5, delay: 0, yMove: 180 },
-  { id: 3, color: '#7c3aed', left: 55, top: 15, size: 4.5, duration: 4.5, delay: 2, yMove: 220 },
-  { id: 4, color: '#ff4444', left: 70, top: 35, size: 3.5, duration: 5.5, delay: 1.5, yMove: 160 },
-  { id: 5, color: '#ffb784', left: 85, top: 55, size: 5.5, duration: 4, delay: 0.5, yMove: 190 },
-  { id: 6, color: '#7c3aed', left: 15, top: 75, size: 4, duration: 3, delay: 2.5, yMove: 170 },
-  { id: 7, color: '#ff4444', left: 30, top: 85, size: 3, duration: 6, delay: 0, yMove: 250 },
-  { id: 8, color: '#ffb784', left: 45, top: 25, size: 5, duration: 4.5, delay: 1, yMove: 200 },
-  { id: 9, color: '#7c3aed', left: 60, top: 70, size: 4.5, duration: 5, delay: 2, yMove: 180 },
-  { id: 10, color: '#ff4444', left: 75, top: 50, size: 3.5, duration: 3.5, delay: 1.5, yMove: 210 },
-  { id: 11, color: '#ffb784', left: 90, top: 30, size: 4, duration: 4, delay: 0.5, yMove: 160 },
-  { id: 12, color: '#7c3aed', left: 20, top: 90, size: 5.5, duration: 5.5, delay: 2.5, yMove: 230 },
-  { id: 13, color: '#ff4444', left: 35, top: 10, size: 3, duration: 3, delay: 0, yMove: 140 },
-  { id: 14, color: '#ffb784', left: 50, top: 45, size: 4.5, duration: 6, delay: 1, yMove: 190 },
-  { id: 15, color: '#7c3aed', left: 65, top: 80, size: 4, duration: 4.5, delay: 2, yMove: 170 },
-  { id: 16, color: '#ff4444', left: 80, top: 65, size: 5, duration: 5, delay: 1.5, yMove: 220 },
-  { id: 17, color: '#ffb784', left: 12, top: 50, size: 3.5, duration: 3.5, delay: 0.5, yMove: 180 },
-  { id: 18, color: '#7c3aed', left: 28, top: 5, size: 4.5, duration: 4, delay: 2.5, yMove: 200 },
-  { id: 19, color: '#ff4444', left: 82, top: 95, size: 4, duration: 5.5, delay: 0, yMove: 240 },
+  { id: 0, color: '#7C3AED', left: 10, top: 20, size: 4, duration: 4, delay: 0.5, yMove: 150 },
+  { id: 1, color: '#EC4899', left: 25, top: 40, size: 5, duration: 5, delay: 1, yMove: 200 },
+  { id: 2, color: '#4F9CF9', left: 40, top: 60, size: 3, duration: 3.5, delay: 0, yMove: 180 },
+  { id: 3, color: '#7C3AED', left: 55, top: 15, size: 4.5, duration: 4.5, delay: 2, yMove: 220 },
+  { id: 4, color: '#EC4899', left: 70, top: 35, size: 3.5, duration: 5.5, delay: 1.5, yMove: 160 },
+  { id: 5, color: '#4F9CF9', left: 85, top: 55, size: 5.5, duration: 4, delay: 0.5, yMove: 190 },
+  { id: 6, color: '#7C3AED', left: 15, top: 75, size: 4, duration: 3, delay: 2.5, yMove: 170 },
+  { id: 7, color: '#EC4899', left: 30, top: 85, size: 3, duration: 6, delay: 0, yMove: 250 },
+  { id: 8, color: '#4F9CF9', left: 45, top: 25, size: 5, duration: 4.5, delay: 1, yMove: 200 },
+  { id: 9, color: '#7C3AED', left: 60, top: 70, size: 4.5, duration: 5, delay: 2, yMove: 180 },
+  { id: 10, color: '#EC4899', left: 75, top: 50, size: 3.5, duration: 3.5, delay: 1.5, yMove: 210 },
+  { id: 11, color: '#4F9CF9', left: 90, top: 30, size: 4, duration: 4, delay: 0.5, yMove: 160 },
+  { id: 12, color: '#7C3AED', left: 20, top: 90, size: 5.5, duration: 5.5, delay: 2.5, yMove: 230 },
+  { id: 13, color: '#EC4899', left: 35, top: 10, size: 3, duration: 3, delay: 0, yMove: 140 },
+  { id: 14, color: '#4F9CF9', left: 50, top: 45, size: 4.5, duration: 6, delay: 1, yMove: 190 },
+  { id: 15, color: '#7C3AED', left: 65, top: 80, size: 4, duration: 4.5, delay: 2, yMove: 170 },
+  { id: 16, color: '#EC4899', left: 80, top: 65, size: 5, duration: 5, delay: 1.5, yMove: 220 },
+  { id: 17, color: '#4F9CF9', left: 12, top: 50, size: 3.5, duration: 3.5, delay: 0.5, yMove: 180 },
+  { id: 18, color: '#7C3AED', left: 28, top: 5, size: 4.5, duration: 4, delay: 2.5, yMove: 200 },
+  { id: 19, color: '#EC4899', left: 82, top: 95, size: 4, duration: 5.5, delay: 0, yMove: 240 },
 ];
 
 export default function BossFight({ problem, onAccept, onDecline }: BossFightProps) {
@@ -49,7 +49,7 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
     return () => clearInterval(interval);
   }, []);
 
-  const glowOpacity = 0.15 + (Math.sin(pulseIntensity * 0.1) + 1) * 0.1;
+  const glowOpacity = 0.1 + (Math.sin(pulseIntensity * 0.1) + 1) * 0.08;
 
   return (
     <AnimatePresence>
@@ -60,7 +60,7 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[100] flex items-center justify-center"
           style={{
-            background: `radial-gradient(ellipse at center, rgba(124,58,237,${glowOpacity}) 0%, rgba(12,12,29,0.98) 60%, #0a0a15 100%)`,
+            background: `radial-gradient(ellipse at center, rgba(124,58,237,${glowOpacity}) 0%, rgba(11,15,26,0.98) 60%, #080B14 100%)`,
           }}
         >
           {/* Ambient particles */}
@@ -76,6 +76,7 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
                     background: p.color,
                     left: `${p.left}%`,
                     top: `${p.top}%`,
+                    boxShadow: `0 0 ${p.size * 2}px ${p.color}60`,
                   }}
                   animate={{
                     y: [0, -p.yMove],
@@ -96,27 +97,25 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
             initial={{ scale: 0.8, y: 30 }}
             animate={{ scale: 1, y: 0 }}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            className="relative glass-card rounded-3xl p-8 max-w-lg w-full mx-4 text-center"
+            className="relative rounded-3xl p-8 max-w-lg w-full mx-4 text-center"
             style={{
-              border: '1px solid rgba(255,68,68,0.2)',
-              boxShadow: '0 0 60px rgba(124,58,237,0.2), 0 0 120px rgba(255,68,68,0.08)',
+              background: 'rgba(17, 24, 39, 0.7)',
+              backdropFilter: 'blur(24px)',
+              border: '1px solid rgba(236,72,153,0.15)',
+              boxShadow: '0 0 60px rgba(124,58,237,0.2), 0 0 120px rgba(236,72,153,0.08)',
             }}
           >
             {/* Boss Icon */}
             <motion.div
               animate={{ y: [0, -8, 0], rotate: [0, 3, -3, 0] }}
               transition={{ repeat: Infinity, duration: 3 }}
-              className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-4 overflow-hidden"
+              className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-4"
               style={{
-                background: 'radial-gradient(circle, rgba(255,68,68,0.3) 0%, rgba(124,58,237,0.2) 100%)',
-                boxShadow: '0 0 30px rgba(255,68,68,0.3)',
+                background: 'radial-gradient(circle, rgba(236,72,153,0.2) 0%, rgba(124,58,237,0.15) 100%)',
+                boxShadow: '0 0 30px rgba(236,72,153,0.25)',
               }}
             >
-              {problem.bossImageUrl ? (
-                <img src={problem.bossImageUrl} alt="Boss" className="w-full h-full object-cover" />
-              ) : (
-                <Skull className="w-10 h-10 text-error" />
-              )}
+              <Skull className="w-10 h-10 text-tertiary" />
             </motion.div>
 
             <motion.h1
@@ -126,7 +125,7 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
               className="text-2xl font-bold mb-1"
               style={{
                 fontFamily: 'Space Grotesk',
-                background: 'linear-gradient(135deg, #ff4444, #ffb784)',
+                background: 'linear-gradient(135deg, #EC4899, #FBBF24)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -162,10 +161,10 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
                 </div>
                 <span className="text-xs font-bold text-error">{bossHP}/100</span>
               </div>
-              <div className="h-3 rounded-full bg-surface-container-lowest overflow-hidden">
+              <div className="h-3 rounded-full overflow-hidden" style={{ background: 'rgba(7,10,18,0.8)' }}>
                 <motion.div
                   className="h-full rounded-full"
-                  style={{ background: 'linear-gradient(90deg, #ff4444, #ff8888)' }}
+                  style={{ background: 'linear-gradient(90deg, #EC4899, #FF6B6B)' }}
                   initial={{ width: '100%' }}
                   animate={{ width: `${bossHP}%` }}
                 />
@@ -174,17 +173,17 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
 
             {/* Boss Stats */}
             <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="rounded-xl bg-surface-container-lowest/60 p-2.5">
+              <div className="rounded-xl p-2.5" style={{ background: 'rgba(7,10,18,0.5)', border: '1px solid rgba(255,107,107,0.08)' }}>
                 <Swords className="w-4 h-4 text-error mx-auto mb-1" />
                 <p className="text-[10px] text-on-surface-variant">Difficulty</p>
                 <p className="text-sm font-bold text-error">{problem.difficultyScore}/10</p>
               </div>
-              <div className="rounded-xl bg-surface-container-lowest/60 p-2.5">
+              <div className="rounded-xl p-2.5" style={{ background: 'rgba(7,10,18,0.5)', border: '1px solid rgba(251,191,36,0.08)' }}>
                 <Timer className="w-4 h-4 text-warning mx-auto mb-1" />
                 <p className="text-[10px] text-on-surface-variant">Time Limit</p>
                 <p className="text-sm font-bold text-warning">30 min</p>
               </div>
-              <div className="rounded-xl bg-surface-container-lowest/60 p-2.5">
+              <div className="rounded-xl p-2.5" style={{ background: 'rgba(7,10,18,0.5)', border: '1px solid rgba(236,72,153,0.08)' }}>
                 <Zap className="w-4 h-4 text-tertiary mx-auto mb-1" />
                 <p className="text-[10px] text-on-surface-variant">XP Reward</p>
                 <p className="text-sm font-bold text-tertiary">500</p>
@@ -203,11 +202,10 @@ export default function BossFight({ problem, onAccept, onDecline }: BossFightPro
                 onClick={() => { setShowIntro(false); onAccept(); }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 py-2.5 rounded-xl text-sm font-bold"
+                className="flex-1 py-2.5 rounded-xl text-sm font-bold text-white"
                 style={{
-                  background: 'linear-gradient(135deg, #ff4444, #a15100)',
-                  color: '#fff',
-                  boxShadow: '0 0 20px rgba(255,68,68,0.3)',
+                  background: 'linear-gradient(135deg, #EC4899, #7C3AED)',
+                  boxShadow: '0 0 20px rgba(236,72,153,0.3)',
                 }}
               >
                 ⚔️ Fight

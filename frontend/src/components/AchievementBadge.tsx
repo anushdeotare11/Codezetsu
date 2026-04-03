@@ -21,13 +21,14 @@ export default function AchievementBadge({ achievement, size = 'md' }: Achieveme
   return (
     <motion.div
       whileHover={isUnlocked ? { scale: 1.08, y: -4 } : {}}
-      className={`relative ${s.card} flex flex-col items-center justify-center rounded-xl p-2 transition-all duration-300 cursor-default shrink-0 ${
+      className={`relative ${s.card} flex flex-col items-center justify-center rounded-2xl p-2 transition-all duration-300 cursor-default shrink-0 ${
         isUnlocked ? 'achievement-unlocked glass-card' : 'achievement-locked glass-card'
       }`}
+      style={isUnlocked ? { border: '1px solid rgba(79,156,249,0.08)' } : {}}
     >
       {!isUnlocked && (
         <div className="absolute top-1.5 right-1.5">
-          <Lock className="w-3 h-3 text-outline" />
+          <Lock className="w-3 h-3 text-on-surface-variant/30" />
         </div>
       )}
 
@@ -47,13 +48,13 @@ export default function AchievementBadge({ achievement, size = 'md' }: Achieveme
       </p>
 
       {isUnlocked && achievement.unlockedAt && (
-        <p className="text-[8px] text-secondary mt-1">{achievement.unlockedAt}</p>
+        <p className="text-[8px] text-primary mt-1">{achievement.unlockedAt}</p>
       )}
 
       {isUnlocked && (
-        <div className="absolute inset-0 rounded-xl pointer-events-none"
+        <div className="absolute inset-0 rounded-2xl pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(210,187,255,0.05) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(79,156,249,0.04) 0%, transparent 70%)',
           }}
         />
       )}

@@ -35,7 +35,13 @@ export default function LeaderboardPage() {
         className="flex items-center justify-between"
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-tertiary-container/20 flex items-center justify-center glow-tertiary">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={{
+              background: 'rgba(236,72,153,0.1)',
+              boxShadow: '0 0 15px rgba(236,72,153,0.15)',
+            }}
+          >
             <Trophy className="w-5 h-5 text-tertiary" />
           </div>
           <div>
@@ -47,16 +53,26 @@ export default function LeaderboardPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-surface-container-lowest/60">
+        <div
+          className="flex items-center gap-1 p-1 rounded-xl"
+          style={{
+            background: 'rgba(7,10,18,0.6)',
+            border: '1px solid rgba(79,156,249,0.06)',
+          }}
+        >
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 activeTab === tab
-                  ? 'bg-primary-container text-on-primary-container'
+                  ? 'text-white'
                   : 'text-on-surface-variant hover:text-on-surface'
               }`}
+              style={activeTab === tab ? {
+                background: 'linear-gradient(135deg, #4F9CF9, #7C3AED)',
+                boxShadow: '0 0 15px rgba(79,156,249,0.2)',
+              } : {}}
             >
               {tab}
             </button>

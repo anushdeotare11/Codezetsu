@@ -24,11 +24,18 @@ export default function XPBar({ currentXP, level, showDetails = true }: XPBarPro
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="glass-card rounded-2xl p-4"
+      style={{ border: '1px solid rgba(79,156,249,0.06)' }}
     >
       {showDetails && (
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isCloseToLevelUp ? 'bg-tertiary-container/30 animate-pulse-glow' : 'bg-primary-container/20'}`}>
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isCloseToLevelUp ? 'animate-pulse-glow' : ''}`}
+              style={{
+                background: isCloseToLevelUp
+                  ? 'rgba(236,72,153,0.15)'
+                  : 'rgba(79,156,249,0.1)',
+              }}
+            >
               <Shield className={`w-4 h-4 ${isCloseToLevelUp ? 'text-tertiary' : 'text-primary'}`} />
             </div>
             <div>
@@ -40,22 +47,25 @@ export default function XPBar({ currentXP, level, showDetails = true }: XPBarPro
           </div>
           <div className="text-right">
             <p className="text-xs text-on-surface-variant">Next level</p>
-            <p className="text-sm font-bold text-secondary">{nextLevelXP - currentXP} XP</p>
+            <p className="text-sm font-bold text-primary">{nextLevelXP - currentXP} XP</p>
           </div>
         </div>
       )}
 
       <div className="relative">
-        <div className={`h-2.5 rounded-full overflow-hidden ${isCloseToLevelUp ? 'bg-tertiary-container/20' : 'bg-surface-container-lowest'}`}>
+        <div
+          className="h-2.5 rounded-full overflow-hidden"
+          style={{ background: 'rgba(7,10,18,0.8)' }}
+        >
           <motion.div
             className="h-full rounded-full"
             style={{
               background: isCloseToLevelUp
-                ? 'linear-gradient(90deg, #a15100, #ffb784, #fbbf24)'
-                : 'linear-gradient(90deg, #7c3aed, #4cd7f6)',
+                ? 'linear-gradient(90deg, #EC4899, #FBBF24)'
+                : 'linear-gradient(90deg, #4F9CF9, #7C3AED, #EC4899)',
               boxShadow: isCloseToLevelUp
-                ? '0 0 12px rgba(255,183,132,0.4)'
-                : '0 0 8px rgba(76,215,246,0.3)',
+                ? '0 0 12px rgba(236,72,153,0.4)'
+                : '0 0 10px rgba(79,156,249,0.3)',
             }}
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}

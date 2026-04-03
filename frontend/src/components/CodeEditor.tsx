@@ -31,15 +31,21 @@ export default function CodeEditor({ language, value, onChange, onLanguageChange
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col h-full"
+      className="flex flex-col h-full editor-glow-container"
     >
       {/* Editor Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-surface-container-lowest">
+      <div
+        className="flex items-center justify-between px-4 py-2"
+        style={{
+          background: 'rgba(7, 10, 18, 0.9)',
+          borderBottom: '1px solid rgba(79,156,249,0.06)',
+        }}
+      >
         <div className="flex items-center gap-3">
           <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-error/60" />
-            <div className="w-3 h-3 rounded-full bg-warning/60" />
-            <div className="w-3 h-3 rounded-full bg-success/60" />
+            <div className="w-3 h-3 rounded-full" style={{ background: '#FF6B6B' }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: '#FBBF24' }} />
+            <div className="w-3 h-3 rounded-full" style={{ background: '#4ADE80' }} />
           </div>
           <span className="text-[10px] text-on-surface-variant font-mono">solution.{language === 'python' ? 'py' : language === 'javascript' ? 'js' : language === 'cpp' ? 'cpp' : 'java'}</span>
         </div>
@@ -47,11 +53,15 @@ export default function CodeEditor({ language, value, onChange, onLanguageChange
         <select
           value={language}
           onChange={(e) => onLanguageChange(e.target.value)}
-          className="text-xs bg-surface-container-high text-on-surface px-3 py-1.5 rounded-lg outline-none cursor-pointer hover:bg-surface-container-highest transition-colors"
-          style={{ border: '1px solid rgba(74,68,85,0.15)' }}
+          className="text-xs px-3 py-1.5 rounded-lg outline-none cursor-pointer transition-colors"
+          style={{
+            background: 'rgba(30, 41, 59, 0.6)',
+            color: '#E2E8F0',
+            border: '1px solid rgba(79,156,249,0.1)',
+          }}
         >
           {languages.map((lang) => (
-            <option key={lang.value} value={lang.value} className="bg-surface-container text-on-surface">
+            <option key={lang.value} value={lang.value} style={{ background: '#111827', color: '#E2E8F0' }}>
               {lang.label}
             </option>
           ))}
@@ -83,10 +93,10 @@ export default function CodeEditor({ language, value, onChange, onLanguageChange
             automaticLayout: true,
           }}
           loading={
-            <div className="flex items-center justify-center h-full bg-surface-container-lowest">
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-8 h-8 border-2 border-primary-container border-t-primary rounded-full animate-spin" />
-                <span className="text-xs text-on-surface-variant">Loading editor...</span>
+            <div className="flex items-center justify-center h-full" style={{ background: '#070A12' }}>
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-8 h-8 border-2 border-t-primary rounded-full animate-spin" style={{ borderColor: 'rgba(79,156,249,0.15)', borderTopColor: '#4F9CF9' }} />
+                <span className="text-xs text-on-surface-variant">Initializing editor...</span>
               </div>
             </div>
           }

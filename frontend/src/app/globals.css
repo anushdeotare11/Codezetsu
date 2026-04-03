@@ -1,65 +1,69 @@
 @import "tailwindcss";
 
-/* ===== THE KINETIC ARENA - Design System ===== */
-/* Note: Google Fonts loaded via next/font in layout.tsx */
+/* ===== SKILLSPRINT — CYBERPUNK ARENA Design System ===== */
+/* Google Fonts loaded via next/font in layout.tsx */
 
 @theme inline {
-  --color-background: #131315;
-  --color-foreground: #e5e1e4;
-  --font-sans: 'Manrope', sans-serif;
+  --color-background: #0B0F1A;
+  --color-foreground: #E2E8F0;
+  --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'Space Grotesk', sans-serif;
 
-  /* Surface Hierarchy (Neon Monolith) */
-  --color-surface: #131315;
-  --color-surface-dim: #131315;
-  --color-surface-bright: #39393b;
-  --color-surface-container-lowest: #0e0e10;
-  --color-surface-container-low: #1c1b1d;
-  --color-surface-container: #201f21;
-  --color-surface-container-high: #2a2a2c;
-  --color-surface-container-highest: #353437;
-  --color-surface-variant: rgba(53, 52, 55, 0.4);
+  /* Surface Hierarchy — Deep Space Layers */
+  --color-surface: #0B0F1A;
+  --color-surface-dim: #080B14;
+  --color-surface-bright: #1E293B;
+  --color-surface-container-lowest: #070A12;
+  --color-surface-container-low: #0D1220;
+  --color-surface-container: #111827;
+  --color-surface-container-high: #1E293B;
+  --color-surface-container-highest: #334155;
+  --color-surface-variant: rgba(30, 41, 59, 0.5);
 
-  /* Primary - Neon Purple */
-  --color-primary: #ebb2ff;
-  --color-primary-container: #bc13fe;
-  --color-on-primary: #520072;
-  --color-on-primary-container: #ffffff;
+  /* Primary — Neon Blue */
+  --color-primary: #4F9CF9;
+  --color-primary-container: #1E40AF;
+  --color-on-primary: #FFFFFF;
+  --color-on-primary-container: #DBEAFE;
 
-  /* Secondary - Electric Blue */
-  --color-secondary: #a6e6ff;
-  --color-secondary-container: #14d1ff;
-  --color-on-secondary: #003543;
+  /* Secondary — Electric Cyan */
+  --color-secondary: #22D3EE;
+  --color-secondary-container: #0E7490;
+  --color-on-secondary: #042F2E;
 
-  /* Tertiary - Data Gold */
-  --color-tertiary: #ffb960;
-  --color-tertiary-container: #a76900;
-  --color-on-tertiary: #472a00;
+  /* Tertiary — Hot Pink */
+  --color-tertiary: #EC4899;
+  --color-tertiary-container: #9D174D;
+  --color-on-tertiary: #FFF;
 
   /* State Colors */
-  --color-error: #ffb4ab;
-  --color-error-container: #93000a;
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
+  --color-error: #FF6B6B;
+  --color-error-container: #7F1D1D;
+  --color-success: #4ADE80;
+  --color-warning: #FBBF24;
 
   /* Outline */
-  --color-outline: #9d8ba0;
-  --color-outline-variant: rgba(80, 66, 84, 0.15);
+  --color-outline: #64748B;
+  --color-outline-variant: rgba(51, 65, 85, 0.3);
 
   /* On Surface */
-  --color-on-surface: #e5e1e4;
-  --color-on-surface-variant: #d4c0d7;
+  --color-on-surface: #E2E8F0;
+  --color-on-surface-variant: #94A3B8;
 }
 
 :root {
-  --background: #131315;
-  --foreground: #e5e1e4;
+  --background: #0B0F1A;
+  --foreground: #E2E8F0;
+  --neon-blue: #4F9CF9;
+  --neon-purple: #7C3AED;
+  --neon-pink: #EC4899;
+  --neon-cyan: #22D3EE;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #4a4455 #121222;
+  scrollbar-color: #1E293B #080B14;
 }
 
 *::-webkit-scrollbar {
@@ -67,55 +71,57 @@
   height: 6px;
 }
 *::-webkit-scrollbar-track {
-  background: #121222;
+  background: #080B14;
 }
 *::-webkit-scrollbar-thumb {
-  background: #4a4455;
+  background: #1E293B;
   border-radius: 3px;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: #7c3aed;
+  background: #4F9CF9;
 }
 
 body {
-  background: radial-gradient(ellipse at top left, #121222 0%, #0c0c1d 100%);
+  background: linear-gradient(145deg, #0B0F1A 0%, #12182B 50%, #0B0F1A 100%);
   color: var(--foreground);
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
 }
 
-/* ===== GLASSMORPHISM ===== */
+/* ===== GLASSMORPHISM — Cyberpunk Panels ===== */
 .glass {
-  background: rgba(51, 51, 69, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 .glass-card {
-  background: rgba(51, 51, 69, 0.35);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(210, 187, 255, 0.08);
-  border-left: 1px solid rgba(210, 187, 255, 0.08);
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(79, 156, 249, 0.06);
+  border-top: 1px solid rgba(79, 156, 249, 0.10);
+  border-left: 1px solid rgba(79, 156, 249, 0.08);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  background: rgba(51, 51, 69, 0.5);
-  border-top-color: rgba(210, 187, 255, 0.15);
-  border-left-color: rgba(210, 187, 255, 0.15);
+  background: rgba(17, 24, 39, 0.70);
+  border-color: rgba(79, 156, 249, 0.15);
+  box-shadow: 0 4px 30px rgba(79, 156, 249, 0.06), inset 0 1px 0 rgba(79, 156, 249, 0.08);
 }
 
-/* ===== GLOW EFFECTS ===== */
+/* ===== GLOW EFFECTS — Neon Energy ===== */
 .glow-primary {
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.3), 0 0 40px rgba(124, 58, 237, 0.08);
+  box-shadow: 0 0 15px rgba(79, 156, 249, 0.35), 0 0 45px rgba(79, 156, 249, 0.08);
 }
 
 .glow-secondary {
-  box-shadow: 0 0 15px rgba(76, 215, 246, 0.3), 0 0 40px rgba(76, 215, 246, 0.08);
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.35), 0 0 45px rgba(34, 211, 238, 0.08);
 }
 
 .glow-tertiary {
-  box-shadow: 0 0 15px rgba(255, 183, 132, 0.3), 0 0 40px rgba(255, 183, 132, 0.08);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.35), 0 0 45px rgba(236, 72, 153, 0.08);
 }
 
 .glow-success {
@@ -123,41 +129,59 @@ body {
 }
 
 .glow-error {
-  box-shadow: 0 0 15px rgba(255, 180, 171, 0.3), 0 0 40px rgba(255, 180, 171, 0.08);
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.3), 0 0 40px rgba(255, 107, 107, 0.08);
 }
 
 .text-glow-primary {
-  text-shadow: 0 0 20px rgba(124, 58, 237, 0.5), 0 0 40px rgba(124, 58, 237, 0.2);
+  text-shadow: 0 0 20px rgba(79, 156, 249, 0.5), 0 0 40px rgba(79, 156, 249, 0.2);
 }
 
 .text-glow-secondary {
-  text-shadow: 0 0 20px rgba(76, 215, 246, 0.5), 0 0 40px rgba(76, 215, 246, 0.2);
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.5), 0 0 40px rgba(34, 211, 238, 0.2);
 }
 
-/* ===== GRADIENT BUTTON ===== */
+.text-glow-purple {
+  text-shadow: 0 0 20px rgba(124, 58, 237, 0.5), 0 0 40px rgba(124, 58, 237, 0.2);
+}
+
+/* ===== GRADIENT BUTTONS — Cyberpunk CTA ===== */
 .btn-primary {
-  background: linear-gradient(135deg, #d2bbff, #7c3aed);
-  color: #3f008e;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #4F9CF9, #7C3AED);
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.btn-primary:hover::before {
+  transform: translateX(100%);
 }
 .btn-primary:hover {
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.5), 0 0 50px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 25px rgba(79, 156, 249, 0.5), 0 0 60px rgba(124, 58, 237, 0.15);
   transform: translateY(-1px);
 }
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(76, 215, 246, 0.15);
-  color: #4cd7f6;
+  border: 1px solid rgba(79, 156, 249, 0.15);
+  color: #4F9CF9;
   transition: all 0.3s ease;
 }
 .btn-ghost:hover {
-  background: rgba(76, 215, 246, 0.1);
-  border-color: rgba(76, 215, 246, 0.3);
+  background: rgba(79, 156, 249, 0.08);
+  border-color: rgba(79, 156, 249, 0.3);
+  box-shadow: 0 0 15px rgba(79, 156, 249, 0.1);
 }
 
-/* ===== SIDEBAR LIGHT BAR ===== */
+/* ===== SIDEBAR — Immersive Navigation ===== */
 .sidebar-active {
   position: relative;
 }
@@ -167,17 +191,17 @@ body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 2px;
+  width: 3px;
   height: 60%;
-  background: #4cd7f6;
-  border-radius: 1px;
-  box-shadow: 0 0 8px rgba(76, 215, 246, 0.6);
+  background: linear-gradient(180deg, #4F9CF9, #7C3AED);
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(79, 156, 249, 0.6), 0 0 24px rgba(124, 58, 237, 0.3);
 }
 
-/* ===== ANIMATIONS ===== */
+/* ===== ANIMATIONS — Cyberpunk Motion ===== */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(124, 58, 237, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.6); }
+  0%, 100% { box-shadow: 0 0 15px rgba(79, 156, 249, 0.3); }
+  50% { box-shadow: 0 0 35px rgba(79, 156, 249, 0.6), 0 0 60px rgba(124, 58, 237, 0.15); }
 }
 
 @keyframes float {
@@ -206,6 +230,25 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.7; }
+  94% { opacity: 1; }
+  96% { opacity: 0.85; }
+  97% { opacity: 1; }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(79, 156, 249, 0.1); }
+  50% { border-color: rgba(79, 156, 249, 0.25); }
+}
+
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-gradient { 
@@ -213,11 +256,13 @@ body {
   animation: gradient-shift 3s ease-in-out infinite; 
 }
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(210, 187, 255, 0.1) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 156, 249, 0.08) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
 .animate-counter { animation: counter-up 0.6s ease-out forwards; }
+.animate-neon-flicker { animation: neon-flicker 4s ease infinite; }
+.animate-border-glow { animation: border-glow 3s ease-in-out infinite; }
 
 /* ===== LIVE PULSE INDICATOR ===== */
 .pulse-indicator {
@@ -231,66 +276,79 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #4cd7f6;
+  background: #22D3EE;
   transform: translate(-50%, -50%);
   animation: ripple 1.5s ease-out infinite;
 }
 
-/* ===== DIFFICULTY BADGES ===== */
-.badge-easy { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-.badge-medium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-.badge-hard { background: rgba(255, 180, 171, 0.15); color: #ffb4ab; }
+/* ===== DIFFICULTY BADGES — Glowing Tags ===== */
+.badge-easy {
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.15);
+}
+.badge-medium {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+.badge-hard {
+  background: rgba(255, 107, 107, 0.12);
+  color: #FF6B6B;
+  border: 1px solid rgba(255, 107, 107, 0.15);
+}
 .badge-boss { 
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(161, 81, 0, 0.3)); 
-  color: #ffb784;
-  box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2)); 
+  color: #EC4899;
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.15), 0 0 20px rgba(236, 72, 153, 0.08);
 }
 
-/* ===== HEALTH BAR ===== */
+/* ===== HEALTH BAR — Boss Fights ===== */
 .health-bar {
   height: 8px;
-  background: #1a1a2b;
+  background: #0D1220;
   border-radius: 4px;
   overflow: hidden;
 }
 .health-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #d2bbff);
+  background: linear-gradient(90deg, #7C3AED, #EC4899);
   border-radius: 4px;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== XP BAR ===== */
+/* ===== XP BAR — Level Progress ===== */
 .xp-bar {
   height: 6px;
-  background: #1a1a2b;
+  background: #0D1220;
   border-radius: 3px;
   overflow: hidden;
 }
 .xp-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #4cd7f6);
+  background: linear-gradient(90deg, #4F9CF9, #7C3AED, #EC4899);
   border-radius: 3px;
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 8px rgba(76, 215, 246, 0.3);
+  box-shadow: 0 0 10px rgba(79, 156, 249, 0.4);
 }
 
-/* ===== ACHIEVEMENT LOCKED ===== */
+/* ===== ACHIEVEMENT STATES ===== */
 .achievement-locked {
-  filter: grayscale(100%) brightness(0.4);
-  opacity: 0.5;
+  filter: grayscale(100%) brightness(0.3);
+  opacity: 0.4;
 }
 .achievement-unlocked {
   transition: all 0.3s ease;
 }
 .achievement-unlocked:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(210, 187, 255, 0.3);
+  box-shadow: 0 0 25px rgba(79, 156, 249, 0.2), 0 0 50px rgba(124, 58, 237, 0.1);
 }
 
-/* ===== GRADIENT TEXT ===== */
+/* ===== GRADIENT TEXT — Cyberpunk Typography ===== */
 .gradient-text {
-  background: linear-gradient(135deg, #d2bbff, #7c3aed, #4cd7f6);
+  background: linear-gradient(135deg, #4F9CF9, #7C3AED, #EC4899);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -299,7 +357,7 @@ body {
 }
 
 .gradient-text-fire {
-  background: linear-gradient(135deg, #ffb784, #f97316, #ef4444);
+  background: linear-gradient(135deg, #EC4899, #FF6B6B, #FBBF24);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -307,29 +365,30 @@ body {
 
 /* ===== CODE TERMINAL ===== */
 .code-terminal {
-  background: #0c0c1d;
+  background: #070A12;
   border-radius: 0;
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* ===== PODIUM ===== */
+/* ===== PODIUM — Leaderboard Top 3 ===== */
 .podium-gold {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(161, 81, 0, 0.2));
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(234, 179, 8, 0.1));
   border: 1px solid rgba(251, 191, 36, 0.2);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.08);
 }
 .podium-silver {
-  background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(100, 116, 139, 0.2));
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.15), rgba(100, 116, 139, 0.1));
   border: 1px solid rgba(148, 163, 184, 0.15);
 }
 .podium-bronze {
-  background: linear-gradient(135deg, rgba(180, 83, 9, 0.2), rgba(146, 64, 14, 0.2));
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.15), rgba(146, 64, 14, 0.1));
   border: 1px solid rgba(180, 83, 9, 0.15);
 }
 
 /* ===== TABLE ROWS ===== */
 .table-row-highlight {
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(124, 58, 237, 0.15);
+  background: rgba(79, 156, 249, 0.06);
+  border: 1px solid rgba(79, 156, 249, 0.12);
 }
 
 /* ===== LABEL STYLING ===== */
@@ -339,7 +398,25 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #ccc3d8;
+  color: #64748B;
+}
+
+/* ===== AMBIENT BACKGROUND EFFECTS ===== */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(79, 156, 249, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 156, 249, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ===== MOBILE RESPONSIVENESS ===== */
@@ -348,7 +425,7 @@ body {
     padding: 1rem;
   }
 
-  /* Hide sidebar on mobile - will use bottom nav */
+  /* Hide sidebar on mobile */
   aside {
     display: none !important;
   }
@@ -376,9 +453,9 @@ body {
     left: 0;
     right: 0;
     height: 64px;
-    background: rgba(26,26,43,0.98);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(74,68,85,0.2);
+    background: rgba(11,15,26,0.96);
+    backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(79,156,249,0.08);
     z-index: 100;
     justify-content: space-around;
     align-items: center;
@@ -422,4 +499,33 @@ body {
   .btn-primary, .btn-ghost {
     padding: 0.75rem 1.5rem;
   }
+}
+
+/* ===== ARENA EDITOR GLOW CONTAINER ===== */
+.editor-glow-container {
+  position: relative;
+}
+.editor-glow-container::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(79, 156, 249, 0.15), rgba(124, 58, 237, 0.1), rgba(236, 72, 153, 0.08));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.editor-glow-container:focus-within::before {
+  opacity: 1;
+}
+
+/* ===== PAGE TRANSITION WRAPPER ===== */
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }

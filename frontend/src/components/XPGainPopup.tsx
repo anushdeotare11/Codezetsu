@@ -60,7 +60,7 @@ export default function XPGainPopup({ show, xpAmount, bonusText, position }: XPG
                 key={i}
                 className="absolute w-1.5 h-1.5 rounded-full"
                 style={{
-                  background: i % 2 === 0 ? '#4cd7f6' : '#7c3aed',
+                  background: i % 3 === 0 ? '#4F9CF9' : i % 3 === 1 ? '#7C3AED' : '#EC4899',
                   left: '50%',
                   top: '50%',
                 }}
@@ -85,10 +85,12 @@ export default function XPGainPopup({ show, xpAmount, bonusText, position }: XPG
                 scale: [1, 1.05, 1],
               }}
               transition={{ duration: 0.5, repeat: 2 }}
-              className="glass-card rounded-2xl px-6 py-4 text-center relative overflow-hidden"
+              className="rounded-2xl px-6 py-4 text-center relative overflow-hidden"
               style={{
-                boxShadow: '0 0 30px rgba(76,215,246,0.4)',
-                border: '1px solid rgba(76,215,246,0.3)',
+                background: 'rgba(17, 24, 39, 0.8)',
+                backdropFilter: 'blur(24px)',
+                boxShadow: '0 0 30px rgba(79,156,249,0.4)',
+                border: '1px solid rgba(79,156,249,0.2)',
               }}
             >
               {/* Shimmer effect */}
@@ -104,15 +106,15 @@ export default function XPGainPopup({ show, xpAmount, bonusText, position }: XPG
                     animate={{ rotate: [0, 15, -15, 0] }}
                     transition={{ duration: 0.5, repeat: 2 }}
                   >
-                    <Zap className="w-6 h-6 text-secondary fill-secondary" />
+                    <Zap className="w-6 h-6 text-primary fill-primary" />
                   </motion.div>
                   <span
-                    className="text-3xl font-black text-secondary"
+                    className="text-3xl font-black text-primary"
                     style={{ fontFamily: 'Space Grotesk' }}
                   >
                     +{xpAmount}
                   </span>
-                  <span className="text-lg font-bold text-secondary">XP</span>
+                  <span className="text-lg font-bold text-primary">XP</span>
                 </div>
 
                 {bonusText && (
@@ -141,13 +143,14 @@ export function StreakFireAnimation({ streak }: { streak: number }) {
 
   return (
     <motion.div
-      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary/20"
+      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full"
+      style={{ background: 'rgba(236,72,153,0.12)' }}
       animate={{
         scale: [1, 1.1, 1],
         boxShadow: [
-          '0 0 10px rgba(255,183,132,0.3)',
-          '0 0 20px rgba(255,183,132,0.5)',
-          '0 0 10px rgba(255,183,132,0.3)',
+          '0 0 10px rgba(236,72,153,0.2)',
+          '0 0 20px rgba(236,72,153,0.4)',
+          '0 0 10px rgba(236,72,153,0.2)',
         ],
       }}
       transition={{ duration: 1.5, repeat: Infinity }}

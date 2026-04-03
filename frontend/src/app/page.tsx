@@ -27,28 +27,28 @@ const features = [
 ];
 
 const accentClasses = {
-  primary: { bg: 'bg-primary-container/20', text: 'text-primary', glow: 'glow-primary' },
-  secondary: { bg: 'bg-secondary-container/20', text: 'text-secondary', glow: 'glow-secondary' },
-  tertiary: { bg: 'bg-tertiary-container/20', text: 'text-tertiary', glow: 'glow-tertiary' },
+  primary: { bg: 'bg-primary/10', text: 'text-primary', glow: 'glow-primary', border: 'border-primary/10' },
+  secondary: { bg: 'bg-secondary/10', text: 'text-secondary', glow: 'glow-secondary', border: 'border-secondary/10' },
+  tertiary: { bg: 'bg-tertiary/10', text: 'text-tertiary', glow: 'glow-tertiary', border: 'border-tertiary/10' },
 };
 
 // Pre-generated particle positions to avoid hydration mismatch
 const particleData = [
-  { id: 0, color: '#7c3aed', left: 15, top: 10, size: 2.5, duration: 7, delay: 1 },
-  { id: 1, color: '#4cd7f6', left: 25, top: 30, size: 3, duration: 8, delay: 2 },
-  { id: 2, color: '#ffb784', left: 40, top: 50, size: 2, duration: 6, delay: 0.5 },
-  { id: 3, color: '#7c3aed', left: 55, top: 20, size: 3.5, duration: 9, delay: 3 },
-  { id: 4, color: '#4cd7f6', left: 70, top: 60, size: 2.2, duration: 7.5, delay: 1.5 },
-  { id: 5, color: '#ffb784', left: 85, top: 40, size: 2.8, duration: 6.5, delay: 4 },
-  { id: 6, color: '#7c3aed', left: 20, top: 70, size: 3.2, duration: 8.5, delay: 2.5 },
-  { id: 7, color: '#4cd7f6', left: 35, top: 85, size: 2.4, duration: 7, delay: 0 },
-  { id: 8, color: '#ffb784', left: 50, top: 15, size: 3, duration: 9.5, delay: 3.5 },
-  { id: 9, color: '#7c3aed', left: 65, top: 75, size: 2.6, duration: 6, delay: 1 },
-  { id: 10, color: '#4cd7f6', left: 80, top: 25, size: 2.9, duration: 8, delay: 4.5 },
-  { id: 11, color: '#ffb784', left: 30, top: 55, size: 2.1, duration: 7.5, delay: 2 },
-  { id: 12, color: '#7c3aed', left: 45, top: 90, size: 3.3, duration: 9, delay: 0.5 },
-  { id: 13, color: '#4cd7f6', left: 60, top: 45, size: 2.7, duration: 6.5, delay: 3 },
-  { id: 14, color: '#ffb784', left: 75, top: 80, size: 2.3, duration: 8.5, delay: 1.5 },
+  { id: 0, color: '#4F9CF9', left: 15, top: 10, size: 2.5, duration: 7, delay: 1 },
+  { id: 1, color: '#7C3AED', left: 25, top: 30, size: 3, duration: 8, delay: 2 },
+  { id: 2, color: '#EC4899', left: 40, top: 50, size: 2, duration: 6, delay: 0.5 },
+  { id: 3, color: '#4F9CF9', left: 55, top: 20, size: 3.5, duration: 9, delay: 3 },
+  { id: 4, color: '#7C3AED', left: 70, top: 60, size: 2.2, duration: 7.5, delay: 1.5 },
+  { id: 5, color: '#EC4899', left: 85, top: 40, size: 2.8, duration: 6.5, delay: 4 },
+  { id: 6, color: '#4F9CF9', left: 20, top: 70, size: 3.2, duration: 8.5, delay: 2.5 },
+  { id: 7, color: '#7C3AED', left: 35, top: 85, size: 2.4, duration: 7, delay: 0 },
+  { id: 8, color: '#EC4899', left: 50, top: 15, size: 3, duration: 9.5, delay: 3.5 },
+  { id: 9, color: '#4F9CF9', left: 65, top: 75, size: 2.6, duration: 6, delay: 1 },
+  { id: 10, color: '#7C3AED', left: 80, top: 25, size: 2.9, duration: 8, delay: 4.5 },
+  { id: 11, color: '#EC4899', left: 30, top: 55, size: 2.1, duration: 7.5, delay: 2 },
+  { id: 12, color: '#4F9CF9', left: 45, top: 90, size: 3.3, duration: 9, delay: 0.5 },
+  { id: 13, color: '#7C3AED', left: 60, top: 45, size: 2.7, duration: 6.5, delay: 3 },
+  { id: 14, color: '#EC4899', left: 75, top: 80, size: 2.3, duration: 8.5, delay: 1.5 },
 ];
 
 export default function LandingPage() {
@@ -62,26 +62,18 @@ export default function LandingPage() {
     <div className="relative min-h-screen overflow-hidden">
       {/* Ambient Background Gradients */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full opacity-20"
-          style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%)' }}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full opacity-[0.06]"
+          style={{ background: 'radial-gradient(circle, #4F9CF9 0%, transparent 70%)' }}
         />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-15"
-          style={{ background: 'radial-gradient(circle, rgba(76,215,246,0.25) 0%, transparent 70%)' }}
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full opacity-[0.04]"
+          style={{ background: 'radial-gradient(circle, #7C3AED 0%, transparent 70%)' }}
         />
-        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full opacity-10"
-          style={{ background: 'radial-gradient(circle, rgba(255,183,132,0.2) 0%, transparent 70%)' }}
+        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full opacity-[0.03]"
+          style={{ background: 'radial-gradient(circle, #EC4899 0%, transparent 70%)' }}
         />
 
         {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(210,187,255,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(210,187,255,0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
+        <div className="absolute inset-0 cyber-grid" />
       </div>
 
       {/* Floating Particles */}
@@ -97,6 +89,7 @@ export default function LandingPage() {
                 background: p.color,
                 left: `${p.left}%`,
                 top: `${p.top}%`,
+                boxShadow: `0 0 ${p.size * 3}px ${p.color}40`,
               }}
               animate={{
                 y: [0, -150 - p.duration * 10],
@@ -120,20 +113,24 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-8"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8"
+            style={{
+              background: 'rgba(17, 24, 39, 0.6)',
+              border: '1px solid rgba(79, 156, 249, 0.1)',
+            }}
           >
             <div className="relative w-2 h-2">
-              <div className="w-2 h-2 rounded-full bg-secondary" />
-              <div className="w-2 h-2 rounded-full bg-secondary absolute inset-0 animate-ping opacity-75" />
+              <div className="w-2 h-2 rounded-full bg-primary" />
+              <div className="w-2 h-2 rounded-full bg-primary absolute inset-0 animate-ping opacity-75" />
             </div>
-            <span className="text-xs font-medium text-secondary">Season 4 — Now Open</span>
+            <span className="text-xs font-medium text-primary">Season 4 — Now Open</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-7xl font-bold mb-4 leading-tight"
+            className="text-6xl md:text-8xl font-black mb-4 leading-tight"
             style={{ fontFamily: 'Space Grotesk' }}
           >
             <span className="gradient-text">SkillSprint</span>
@@ -146,8 +143,8 @@ export default function LandingPage() {
             className="text-xl text-on-surface-variant mb-3 max-w-xl mx-auto"
           >
             The Adaptive Coding Arena where{' '}
-            <span className="text-secondary font-semibold">AI evaluators</span> and{' '}
-            <span className="text-primary font-semibold">human skill</span> collide.
+            <span className="text-primary font-semibold">AI evaluators</span> and{' '}
+            <span className="text-tertiary font-semibold">human skill</span> collide.
           </motion.p>
 
           <motion.p
@@ -169,7 +166,7 @@ export default function LandingPage() {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="btn-primary px-8 py-3 rounded-xl text-base font-bold inline-flex items-center gap-2"
+                className="btn-primary px-8 py-3.5 rounded-2xl text-base font-bold inline-flex items-center gap-2"
               >
                 <Swords className="w-5 h-5" />
                 Enter the Arena
@@ -180,7 +177,7 @@ export default function LandingPage() {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="btn-ghost px-6 py-3 rounded-xl text-sm font-semibold"
+                className="btn-ghost px-6 py-3.5 rounded-2xl text-sm font-semibold"
               >
                 View Dashboard
               </motion.button>
@@ -200,9 +197,9 @@ export default function LandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 + i * 0.15 }}
                 whileHover={{ y: -4 }}
-                className="glass-card rounded-2xl p-6 transition-all duration-300 group cursor-default"
+                className={`glass-card rounded-2xl p-6 transition-all duration-300 group cursor-default border ${accent.border}`}
               >
-                <div className={`w-12 h-12 rounded-xl ${accent.bg} flex items-center justify-center mb-4 group-hover:${accent.glow} transition-shadow`}>
+                <div className={`w-12 h-12 rounded-xl ${accent.bg} flex items-center justify-center mb-4 transition-shadow group-hover:${accent.glow}`}>
                   <Icon className={`w-6 h-6 ${accent.text}`} />
                 </div>
                 <h3 className="text-lg font-bold text-on-surface mb-2" style={{ fontFamily: 'Space Grotesk' }}>
@@ -222,6 +219,7 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
           className="glass-card rounded-3xl p-8 mb-20"
+          style={{ border: '1px solid rgba(79,156,249,0.06)' }}
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
@@ -267,7 +265,7 @@ export default function LandingPage() {
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="btn-primary px-8 py-3 rounded-xl text-base font-bold inline-flex items-center gap-2"
+              className="btn-primary px-8 py-3.5 rounded-2xl text-base font-bold inline-flex items-center gap-2"
             >
               <Swords className="w-5 h-5" />
               Begin Your Quest

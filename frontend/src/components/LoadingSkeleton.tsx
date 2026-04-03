@@ -11,7 +11,7 @@ interface SkeletonProps {
 // Base skeleton with shimmer animation
 function Skeleton({ className = '', style }: SkeletonProps) {
   return (
-    <div className={`relative overflow-hidden bg-surface-container-high/50 rounded ${className}`} style={style}>
+    <div className={`relative overflow-hidden rounded ${className}`} style={{ background: 'rgba(30,41,59,0.4)', ...style }}>
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
         animate={{ x: ['-100%', '200%'] }}
@@ -43,17 +43,17 @@ export function SkillRadarSkeleton() {
       <Skeleton className="w-48 h-3 mb-6" />
       <div className="flex items-center justify-center h-[320px]">
         <div className="relative">
-          {/* Hexagon-ish shape */}
           {[200, 150, 100, 50].map((size, i) => (
             <motion.div
               key={i}
-              className="absolute rounded-full border border-surface-container-high/30"
+              className="absolute rounded-full"
               style={{
                 width: size,
                 height: size,
                 left: '50%',
                 top: '50%',
                 transform: 'translate(-50%, -50%)',
+                border: '1px solid rgba(79,156,249,0.06)',
               }}
               animate={{ opacity: [0.3, 0.5, 0.3] }}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
@@ -69,7 +69,7 @@ export function SkillRadarSkeleton() {
 // Submission list skeleton
 export function SubmissionSkeleton() {
   return (
-    <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest/40">
+    <div className="flex items-center justify-between p-3 rounded-xl" style={{ background: 'rgba(7,10,18,0.4)' }}>
       <div className="flex items-center gap-3 min-w-0 flex-1">
         <Skeleton className="w-8 h-5 rounded" />
         <div className="flex-1">
@@ -139,7 +139,7 @@ export function LeaderboardRowSkeleton() {
 // Achievement badge skeleton
 export function AchievementSkeleton() {
   return (
-    <div className="w-28 h-32 flex flex-col items-center justify-center rounded-xl glass-card p-2">
+    <div className="w-28 h-32 flex flex-col items-center justify-center rounded-2xl glass-card p-2">
       <Skeleton className="w-10 h-10 rounded-full mb-2" />
       <Skeleton className="w-16 h-3 mb-1" />
       <Skeleton className="w-20 h-2" />
@@ -157,7 +157,7 @@ export function DashboardSkeleton() {
           <Skeleton className="w-40 h-8 mb-2" />
           <Skeleton className="w-32 h-4" />
         </div>
-        <Skeleton className="w-32 h-10 rounded-xl" />
+        <Skeleton className="w-32 h-10 rounded-2xl" />
       </div>
 
       {/* Stats Grid */}
@@ -224,8 +224,8 @@ export function ArenaSkeleton() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-surface-container-low shrink-0"
-        style={{ borderBottom: '1px solid rgba(74,68,85,0.15)' }}
+      <div className="flex items-center justify-between px-4 py-2 shrink-0"
+        style={{ background: 'rgba(11,15,26,0.9)', borderBottom: '1px solid rgba(79,156,249,0.06)' }}
       >
         <div className="flex items-center gap-3">
           <Skeleton className="w-20 h-8 rounded-lg" />
@@ -235,21 +235,21 @@ export function ArenaSkeleton() {
             <Skeleton className="w-32 h-5" />
           </div>
         </div>
-        <Skeleton className="w-24 h-8 rounded-lg" />
+        <Skeleton className="w-24 h-8 rounded-xl" />
       </div>
 
       {/* Main */}
       <div className="flex-1 flex min-h-0">
         {/* Problem Panel */}
-        <div className="w-[40%] shrink-0 bg-surface-container-low"
-          style={{ borderRight: '1px solid rgba(74,68,85,0.15)' }}
+        <div className="w-[40%] shrink-0"
+          style={{ background: 'rgba(11,15,26,0.6)', borderRight: '1px solid rgba(79,156,249,0.06)' }}
         >
           <ProblemPanelSkeleton />
         </div>
 
         {/* Editor */}
         <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex items-center justify-between px-4 py-2 bg-surface-container-lowest">
+          <div className="flex items-center justify-between px-4 py-2" style={{ background: 'rgba(7,10,18,0.9)' }}>
             <div className="flex items-center gap-3">
               <div className="flex gap-1.5">
                 <Skeleton className="w-3 h-3 rounded-full" />
@@ -260,7 +260,7 @@ export function ArenaSkeleton() {
             </div>
             <Skeleton className="w-24 h-7 rounded-lg" />
           </div>
-          <div className="flex-1 bg-surface-container-lowest p-4">
+          <div className="flex-1 p-4" style={{ background: '#070A12' }}>
             <div className="space-y-2">
               {[55, 75, 60, 85, 70, 45, 80].map((width, i) => (
                 <Skeleton key={i} className="h-4" style={{ width: `${width}%` }} />

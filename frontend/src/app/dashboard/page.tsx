@@ -15,11 +15,11 @@ import { fetchUserProfile, fetchUserStats, fetchUserSkills, fetchSubmissionHisto
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    accepted: 'bg-success/15 text-success',
-    wrong_answer: 'bg-error/15 text-error',
-    runtime_error: 'bg-warning/15 text-warning',
-    time_limit: 'bg-tertiary/15 text-tertiary',
-    pending: 'bg-outline/15 text-outline',
+    accepted: 'bg-success/12 text-success border border-success/15',
+    wrong_answer: 'bg-error/12 text-error border border-error/15',
+    runtime_error: 'bg-warning/12 text-warning border border-warning/15',
+    time_limit: 'bg-tertiary/12 text-tertiary border border-tertiary/15',
+    pending: 'bg-outline/12 text-outline border border-outline/15',
   };
   const labels: Record<string, string> = {
     accepted: 'AC',
@@ -30,7 +30,7 @@ function StatusBadge({ status }: { status: string }) {
   };
 
   return (
-    <span className={`${styles[status] || styles.pending} px-2 py-0.5 rounded text-[10px] font-bold uppercase`}>
+    <span className={`${styles[status] || styles.pending} px-2 py-0.5 rounded-lg text-[10px] font-bold uppercase`}>
       {labels[status] || status}
     </span>
   );
@@ -101,7 +101,7 @@ export default function DashboardPage() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="btn-primary px-5 py-2 rounded-xl text-sm font-bold inline-flex items-center gap-2"
+            className="btn-primary px-5 py-2.5 rounded-2xl text-sm font-bold inline-flex items-center gap-2"
           >
             Enter Arena <ArrowRight className="w-4 h-4" />
           </motion.button>
@@ -159,6 +159,7 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="lg:col-span-2 glass-card rounded-2xl p-5"
+          style={{ border: '1px solid rgba(79,156,249,0.06)' }}
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
@@ -174,7 +175,9 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest/40 hover:bg-surface-container-lowest/60 transition-colors"
+                whileHover={{ backgroundColor: 'rgba(79,156,249,0.03)' }}
+                className="flex items-center justify-between p-3 rounded-xl transition-colors"
+                style={{ background: 'rgba(7,10,18,0.4)' }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <StatusBadge status={sub.status} />
@@ -185,7 +188,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="text-right shrink-0">
                   {sub.aiEvaluation && (
-                    <p className="text-xs font-bold text-secondary">{sub.aiEvaluation.overallScore}/10</p>
+                    <p className="text-xs font-bold text-primary">{sub.aiEvaluation.overallScore}/10</p>
                   )}
                   <p className="text-[10px] text-on-surface-variant flex items-center gap-1">
                     <Clock className="w-2.5 h-2.5" />

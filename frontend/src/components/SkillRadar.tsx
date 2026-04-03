@@ -1,6 +1,3 @@
-
-
-
 'use client';
 
 import React from 'react';
@@ -24,6 +21,7 @@ export default function SkillRadar({ data, size = 'md' }: SkillRadarProps) {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6 }}
       className="glass-card rounded-2xl p-5"
+      style={{ border: '1px solid rgba(79,156,249,0.06)' }}
     >
       <h3
         className="text-sm font-semibold text-on-surface mb-1"
@@ -36,13 +34,13 @@ export default function SkillRadar({ data, size = 'md' }: SkillRadarProps) {
       <ResponsiveContainer width="100%" height={heights[size]}>
         <RadarChart data={data} cx="50%" cy="50%" outerRadius="75%">
           <PolarGrid
-            stroke="rgba(74,68,85,0.3)"
+            stroke="rgba(79,156,249,0.08)"
             strokeDasharray="3 3"
           />
           <PolarAngleAxis
             dataKey="skillName"
             tick={{
-              fill: '#ccc3d8',
+              fill: '#94A3B8',
               fontSize: 11,
               fontFamily: 'Inter',
             }}
@@ -50,24 +48,25 @@ export default function SkillRadar({ data, size = 'md' }: SkillRadarProps) {
           <PolarRadiusAxis
             angle={30}
             domain={[0, 10]}
-            tick={{ fill: '#958da1', fontSize: 9 }}
+            tick={{ fill: '#64748B', fontSize: 9 }}
             axisLine={false}
           />
           <Radar
             name="Skills"
             dataKey="score"
-            stroke="#7c3aed"
+            stroke="#4F9CF9"
             strokeWidth={2}
             fill="url(#skillGradient)"
-            fillOpacity={0.4}
-            dot={{ fill: '#4cd7f6', r: 4, strokeWidth: 0 }}
+            fillOpacity={0.35}
+            dot={{ fill: '#EC4899', r: 4, strokeWidth: 0 }}
             animationDuration={1200}
             animationEasing="ease-out"
           />
           <defs>
             <linearGradient id="skillGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.6} />
-              <stop offset="100%" stopColor="#4cd7f6" stopOpacity={0.3} />
+              <stop offset="0%" stopColor="#4F9CF9" stopOpacity={0.5} />
+              <stop offset="50%" stopColor="#7C3AED" stopOpacity={0.3} />
+              <stop offset="100%" stopColor="#EC4899" stopOpacity={0.2} />
             </linearGradient>
           </defs>
           <Tooltip
@@ -75,9 +74,16 @@ export default function SkillRadar({ data, size = 'md' }: SkillRadarProps) {
               if (!payload || payload.length === 0) return null;
               const d = payload[0].payload as SkillData;
               return (
-                <div className="glass-card rounded-lg px-3 py-2">
+                <div
+                  className="rounded-xl px-3 py-2"
+                  style={{
+                    background: 'rgba(17, 24, 39, 0.9)',
+                    border: '1px solid rgba(79,156,249,0.15)',
+                    backdropFilter: 'blur(12px)',
+                  }}
+                >
                   <p className="text-xs font-semibold text-on-surface">{d.skillName}</p>
-                  <p className="text-sm font-bold text-secondary">{d.score.toFixed(1)} / 10</p>
+                  <p className="text-sm font-bold text-primary">{d.score.toFixed(1)} / 10</p>
                 </div>
               );
             }}

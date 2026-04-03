@@ -68,7 +68,7 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[180] flex items-center justify-center pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(210,187,255,0.1) 0%, rgba(12,12,29,0.85) 60%)',
+          background: 'radial-gradient(ellipse at center, rgba(79,156,249,0.08) 0%, rgba(11,15,26,0.88) 60%)',
         }}
       >
         {/* Radial Particles */}
@@ -86,8 +86,8 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
                 height: p.size,
                 left: '50%',
                 top: '50%',
-                background: p.id % 3 === 0 ? '#d2bbff' : p.id % 3 === 1 ? '#fbbf24' : '#4cd7f6',
-                boxShadow: `0 0 8px ${p.id % 3 === 0 ? '#d2bbff' : p.id % 3 === 1 ? '#fbbf24' : '#4cd7f6'}`,
+                background: p.id % 3 === 0 ? '#4F9CF9' : p.id % 3 === 1 ? '#FBBF24' : '#EC4899',
+                boxShadow: `0 0 8px ${p.id % 3 === 0 ? '#4F9CF9' : p.id % 3 === 1 ? '#FBBF24' : '#EC4899'}`,
               }}
               initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
               animate={{
@@ -111,7 +111,7 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
             key={ring}
             className="absolute rounded-full"
             style={{
-              border: '3px solid #fbbf24',
+              border: '3px solid #FBBF24',
               boxShadow: '0 0 20px rgba(251,191,36,0.5)',
             }}
             initial={{ width: 50, height: 50, opacity: 0.8 }}
@@ -134,10 +134,12 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
           animate={{ scale: 1, rotate: 0 }}
           exit={{ scale: 0 }}
           transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-          className="glass-card rounded-3xl p-8 text-center relative"
+          className="rounded-3xl p-8 text-center relative"
           style={{
-            boxShadow: '0 0 60px rgba(251,191,36,0.4), 0 0 100px rgba(210,187,255,0.2)',
-            border: '1px solid rgba(251,191,36,0.3)',
+            background: 'rgba(17, 24, 39, 0.8)',
+            backdropFilter: 'blur(24px)',
+            boxShadow: '0 0 60px rgba(251,191,36,0.3), 0 0 100px rgba(79,156,249,0.1)',
+            border: '1px solid rgba(251,191,36,0.2)',
           }}
         >
           {/* Corner Stars */}
@@ -177,8 +179,8 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
               transition={{ repeat: Infinity, duration: 2 }}
               className="inline-flex items-center justify-center w-20 h-20 rounded-2xl relative"
               style={{
-                background: 'linear-gradient(135deg, rgba(251,191,36,0.3), rgba(210,187,255,0.2))',
-                boxShadow: '0 0 30px rgba(251,191,36,0.3)',
+                background: 'linear-gradient(135deg, rgba(251,191,36,0.2), rgba(79,156,249,0.15))',
+                boxShadow: '0 0 30px rgba(251,191,36,0.2)',
               }}
             >
               <span className="text-4xl">{achievement.icon}</span>
@@ -223,7 +225,8 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.9, type: 'spring' }}
-            className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20"
+            className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full"
+            style={{ background: 'rgba(79,156,249,0.12)', border: '1px solid rgba(79,156,249,0.15)' }}
           >
             <Sparkles className="w-3 h-3 text-primary" />
             <span className="text-sm text-primary font-semibold">+100 XP</span>

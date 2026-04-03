@@ -27,7 +27,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <DifficultyBadge difficulty={problem.difficulty} />
-          <span className="text-[10px] text-on-surface-variant">#{problem.id}</span>
+          <span className="text-[10px] text-on-surface-variant/50">#{problem.id}</span>
         </div>
         <h1
           className="text-xl font-bold text-on-surface"
@@ -42,7 +42,11 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
         {problem.topics.map((topic) => (
           <span
             key={topic}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium text-secondary bg-secondary/10"
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-medium text-primary"
+            style={{
+              background: 'rgba(79,156,249,0.08)',
+              border: '1px solid rgba(79,156,249,0.08)',
+            }}
           >
             <Tag className="w-2.5 h-2.5" />
             {topic.replace('_', ' ')}
@@ -65,7 +69,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
               <p key={i} className="text-on-surface-variant text-sm">
                 {parts.map((part, j) =>
                   j % 2 === 1 ? (
-                    <code key={j} className="px-1 py-0.5 rounded bg-surface-container-lowest text-secondary font-mono text-xs">
+                    <code key={j} className="px-1.5 py-0.5 rounded-md text-primary font-mono text-xs" style={{ background: 'rgba(79,156,249,0.08)' }}>
                       {part}
                     </code>
                   ) : (
@@ -85,8 +89,15 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
         <div className="space-y-3">
           <h3 className="text-sm font-semibold text-on-surface label-competitive">Examples</h3>
           {problem.examples.map((ex, i) => (
-            <div key={i} className="rounded-xl bg-surface-container-lowest p-3 space-y-1.5">
-              <div className="flex gap-2"><span className="text-[10px] text-on-surface-variant shrink-0">Input:</span><code className="text-xs text-secondary font-mono">{ex.input}</code></div>
+            <div
+              key={i}
+              className="rounded-xl p-3 space-y-1.5"
+              style={{
+                background: 'rgba(7,10,18,0.6)',
+                border: '1px solid rgba(79,156,249,0.04)',
+              }}
+            >
+              <div className="flex gap-2"><span className="text-[10px] text-on-surface-variant shrink-0">Input:</span><code className="text-xs text-primary font-mono">{ex.input}</code></div>
               <div className="flex gap-2"><span className="text-[10px] text-on-surface-variant shrink-0">Output:</span><code className="text-xs text-success font-mono">{ex.output}</code></div>
               {ex.explanation && <p className="text-[10px] text-on-surface-variant italic">💡 {ex.explanation}</p>}
             </div>
@@ -99,7 +110,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
         <div>
           <button
             onClick={() => setShowHints(!showHints)}
-            className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-fixed transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
           >
             <Lightbulb className="w-4 h-4" />
             {showHints ? 'Hide Hints' : `Show Hints (${problem.hints.length})`}
@@ -119,7 +130,11 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: i * 0.15 }}
-                    className="flex gap-2 p-2.5 rounded-lg bg-primary-container/10"
+                    className="flex gap-2 p-2.5 rounded-xl"
+                    style={{
+                      background: 'rgba(79,156,249,0.05)',
+                      border: '1px solid rgba(79,156,249,0.06)',
+                    }}
                   >
                     <span className="text-xs text-primary font-bold shrink-0">#{i + 1}</span>
                     <p className="text-xs text-on-surface-variant">{hint}</p>

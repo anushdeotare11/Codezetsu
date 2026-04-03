@@ -45,7 +45,7 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        color: ['#7c3aed', '#4cd7f6', '#ffb784', '#4ade80', '#fbbf24', '#ff6b6b'][Math.floor(Math.random() * 6)],
+        color: ['#4F9CF9', '#7C3AED', '#EC4899', '#4ADE80', '#FBBF24', '#22D3EE'][Math.floor(Math.random() * 6)],
         delay: Math.random() * 0.5,
       }));
       setParticles(newParticles);
@@ -66,7 +66,7 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[200] flex items-center justify-center pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(124,58,237,0.15) 0%, rgba(12,12,29,0.9) 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(79,156,249,0.1) 0%, rgba(11,15,26,0.92) 70%)',
           }}
         >
           {/* Confetti Particles */}
@@ -78,7 +78,7 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
                 left: `${particle.x}%`,
                 top: '50%',
                 background: particle.color,
-                boxShadow: `0 0 10px ${particle.color}`,
+                boxShadow: `0 0 8px ${particle.color}`,
               }}
               initial={{ y: 0, opacity: 1, scale: 0 }}
               animate={{
@@ -100,8 +100,8 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
           {[1, 2, 3].map((ring) => (
             <motion.div
               key={ring}
-              className="absolute rounded-full border-2"
-              style={{ borderColor: '#7c3aed' }}
+              className="absolute rounded-full"
+              style={{ border: '2px solid #4F9CF9', boxShadow: '0 0 15px rgba(79,156,249,0.3)' }}
               initial={{ width: 100, height: 100, opacity: 0.8 }}
               animate={{
                 width: [100, 600],
@@ -121,9 +121,12 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
             initial={{ scale: 0, rotate: -20 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.3 }}
-            className="glass-card rounded-3xl p-10 text-center relative"
+            className="rounded-3xl p-10 text-center relative"
             style={{
-              boxShadow: '0 0 80px rgba(124,58,237,0.5), 0 0 150px rgba(76,215,246,0.2)',
+              background: 'rgba(17, 24, 39, 0.8)',
+              backdropFilter: 'blur(24px)',
+              boxShadow: '0 0 80px rgba(79,156,249,0.4), 0 0 150px rgba(124,58,237,0.15)',
+              border: '1px solid rgba(79,156,249,0.15)',
             }}
           >
             {/* Floating Stars */}
@@ -162,8 +165,8 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
                 transition={{ repeat: Infinity, duration: 2 }}
                 className="w-24 h-24 rounded-full flex items-center justify-center relative"
                 style={{
-                  background: 'linear-gradient(135deg, #7c3aed, #4cd7f6)',
-                  boxShadow: '0 0 40px rgba(124,58,237,0.6)',
+                  background: 'linear-gradient(135deg, #4F9CF9, #7C3AED, #EC4899)',
+                  boxShadow: '0 0 40px rgba(79,156,249,0.5)',
                 }}
               >
                 <Shield className="w-10 h-10 text-white" />
@@ -193,7 +196,7 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
                 className="text-5xl font-black mb-2"
                 style={{
                   fontFamily: 'Space Grotesk',
-                  background: 'linear-gradient(135deg, #d2bbff, #7c3aed, #4cd7f6)',
+                  background: 'linear-gradient(135deg, #4F9CF9, #7C3AED, #EC4899)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -209,7 +212,8 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 1, type: 'spring' }}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/20"
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full"
+              style={{ background: 'rgba(74,222,128,0.12)', border: '1px solid rgba(74,222,128,0.15)' }}
             >
               <span className="text-success font-bold">+500 XP Bonus</span>
             </motion.div>
