@@ -241,9 +241,9 @@ export default function ArenaPage() {
                       <span className="text-xs font-medium text-on-surface truncate">{p.title}</span>
                     </div>
                     <div className="flex gap-1 mt-1">
-                      {p.topics && p.topics.slice(0, 2).map(t => (
+                      {p.topics?.filter(Boolean).slice(0, 2).map(t => (
                         <span key={t} className="text-[9px] text-on-surface-variant px-1.5 py-0.5 rounded-md" style={{ background: 'rgba(30,41,59,0.5)' }}>
-                          {t.replace('_', ' ')}
+                          {t?.replace('_', ' ') || ''}
                         </span>
                       ))}
                     </div>

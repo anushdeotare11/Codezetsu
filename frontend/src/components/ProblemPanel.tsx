@@ -39,7 +39,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
 
       {/* Topic Tags */}
       <div className="flex flex-wrap gap-1.5">
-        {problem.topics.map((topic) => (
+        {problem.topics?.filter(Boolean).map((topic) => (
           <span
             key={topic}
             className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-medium text-primary"
@@ -49,7 +49,7 @@ export default function ProblemPanel({ problem }: ProblemPanelProps) {
             }}
           >
             <Tag className="w-2.5 h-2.5" />
-            {topic.replace('_', ' ')}
+            {topic?.replace('_', ' ') || ''}
           </span>
         ))}
       </div>
