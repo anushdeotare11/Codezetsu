@@ -59,7 +59,8 @@ Problem: {problem}
 Code:
 {code}
 
-Return ONLY standard JSON representing out-of-10 skill scores, critique, and improvements. Example structure:
+Return ONLY standard JSON representing out-of-10 skill scores, critique, and improvements.
+Use the following format EXACTLY:
 {{
   "score": 7,
   "weaknesses": ["O(n^2) time complexity", "Missed empty edge case"],
@@ -68,7 +69,27 @@ Return ONLY standard JSON representing out-of-10 skill scores, critique, and imp
   "hint": "Consider tracking seen elements in a dictionary.",
   "explanation": "The optimal approach leverages a HashMap to process elements in O(n) time.",
   "skill_scores": {{"algorithm_knowledge": 6, "data_structures": 5, "code_efficiency": 4, "edge_cases": 5, "readability": 8, "problem_solving": 7}}
-}}"""
+}}
+
+Example Good Execution:
+Problem: Two Sum
+Code: 
+def twoSum(nums, target):
+    seen = {{}}
+    for i, num in enumerate(nums):
+        if target - num in seen: return [seen[target - num], i]
+        seen[num] = i
+JSON:
+{{
+  "score": 10,
+  "weaknesses": [],
+  "feedback": "Flawless O(n) execution using a dictionary.",
+  "suggestions": [],
+  "hint": "None needed.",
+  "explanation": "Using a hash map gives O(1) lookup.",
+  "skill_scores": {{"algorithm_knowledge": 10, "data_structures": 10, "code_efficiency": 10, "edge_cases": 10, "readability": 10, "problem_solving": 10}}
+}}
+"""
 
     for attempt in range(2):
         try:

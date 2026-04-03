@@ -11,7 +11,8 @@ import BossFight from '@/components/BossFight';
 import XPGainPopup from '@/components/XPGainPopup';
 import LevelUpCelebration from '@/components/LevelUpCelebration';
 import AchievementUnlock from '@/components/AchievementUnlock';
-import { mockProblems, mockAchievements, Achievement } from '@/lib/mockData';
+import { mockAchievements, Achievement, Problem } from '@/lib/mockData';
+import { fetchProblems, submitCode } from '@/lib/api';
 
 export default function ArenaPage() {
   const [selectedProblemIdx, setSelectedProblemIdx] = useState(0);
@@ -37,42 +38,49 @@ export default function ArenaPage() {
   const [showAchievement, setShowAchievement] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
 
-  const problem = mockProblems[selectedProblemIdx];
+  const [problems, setProblems] = useState<Problem[]>([]);
+  
+  React.useEffect(() => {
+    fetchProblems().then(data => setProblems(data.length > 0 ? data : []));
+  }, []);
+  
+  const problem = problems[selectedProblemIdx] || null;
 
   // Set starter code when problem or language changes
   React.useEffect(() => {
-    const starter = problem.starterCode[language] || '// Start coding...';
-    setCode(starter);
-    setResult(null);
-  }, [selectedProblemIdx, language, problem.starterCode]);
+    if (problem) {
+      const starter = problem.starterCode?.[language] || '// Start coding...';
+      setCode(starter);
+      setResult(null);
+    }
+  }, [selectedProblemIdx, language, problem]);
 
   const handleSubmit = async () => {
+    if (!problem) return;
     setIsSubmitting(true);
     setResult(null);
 
-    // Simulate submission delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const apiResult = await submitCode(problem.id, code, language);
+    
+    const submissionScore = apiResult.ai_evaluation?.score || 5;
 
-    // Mock result
-    const mockResult = {
-      status: Math.random() > 0.3 ? 'accepted' : 'wrong_answer',
-      passed: Math.random() > 0.3 ? problem.testCases.length : Math.floor(Math.random() * problem.testCases.length),
-      total: problem.testCases.length,
-      score: Math.floor(Math.random() * 4) + 6,
-      feedback: 'Good approach! Consider optimizing your solution for better time complexity. The hash map pattern is well-implemented.',
-    };
-    mockResult.passed = mockResult.status === 'accepted' ? mockResult.total : mockResult.passed;
-
-    setResult(mockResult);
+    setResult({
+      status: apiResult.status,
+      passed: apiResult.test_cases_passed,
+      total: apiResult.total_test_cases,
+      score: submissionScore,
+      feedback: apiResult.ai_evaluation?.feedback || 'Execution completed.',
+    });
     setIsSubmitting(false);
     
     // Show XP gain animation for accepted solutions
-    if (mockResult.status === 'accepted') {
-      const earnedXP = problem.difficulty === 'boss' ? 500 : 
+    if (apiResult.status === 'accepted') {
+      const earnedXP = apiResult.xp_earned > 0 ? apiResult.xp_earned : (
+                       problem.difficulty === 'boss' ? 500 : 
                        problem.difficulty === 'hard' ? 200 : 
-                       problem.difficulty === 'medium' ? 100 : 50;
+                       problem.difficulty === 'medium' ? 100 : 50);
       setXpAmount(earnedXP);
-      setBonusText(mockResult.score >= 9 ? 'Perfect Solution Bonus!' : mockResult.score >= 7 ? 'Clean Code Bonus!' : '');
+      setBonusText(submissionScore >= 9 ? 'Perfect Solution!' : submissionScore >= 7 ? 'Clean Code!' : '');
       setShowXPGain(true);
       
       // Hide XP popup after 3 seconds
@@ -100,7 +108,8 @@ export default function ArenaPage() {
   };
 
   const selectProblem = (idx: number) => {
-    if (mockProblems[idx].difficulty === 'boss') {
+    if (!problems[idx]) return;
+    if (problems[idx].difficulty === 'boss') {
       setShowBossFight(true);
       setSelectedProblemIdx(idx);
     } else {
@@ -153,14 +162,16 @@ export default function ArenaPage() {
             Problems
           </button>
           <div className="h-4 w-px bg-outline-variant/20" />
-          <div className="flex items-center gap-2">
-            <span className={`badge-${problem.difficulty} px-2 py-0.5 rounded text-[10px] font-bold uppercase`}>
-              {problem.difficulty === 'boss' ? '⚔️ Boss' : problem.difficulty}
-            </span>
-            <span className="text-sm font-semibold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
-              {problem.title}
-            </span>
-          </div>
+          {problem && (
+            <div className="flex items-center gap-2">
+              <span className={`badge-${problem.difficulty} px-2 py-0.5 rounded text-[10px] font-bold uppercase`}>
+                {problem.difficulty === 'boss' ? '⚔️ Boss' : problem.difficulty}
+              </span>
+              <span className="text-sm font-semibold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
+                {problem.title}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -205,7 +216,7 @@ export default function ArenaPage() {
             >
               <div className="p-3 space-y-1">
                 <p className="label-competitive px-2 py-1.5">Select Challenge</p>
-                {mockProblems.map((p, i) => (
+                {problems.map((p, i) => (
                   <button
                     key={p.id}
                     onClick={() => selectProblem(i)}
@@ -222,7 +233,7 @@ export default function ArenaPage() {
                       <span className="text-xs font-medium text-on-surface truncate">{p.title}</span>
                     </div>
                     <div className="flex gap-1 mt-1">
-                      {p.topics.slice(0, 2).map(t => (
+                      {p.topics && p.topics.slice(0, 2).map(t => (
                         <span key={t} className="text-[9px] text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">
                           {t.replace('_', ' ')}
                         </span>
@@ -241,7 +252,7 @@ export default function ArenaPage() {
           <div className="w-[40%] shrink-0 bg-surface-container-low overflow-hidden"
             style={{ borderRight: '1px solid rgba(74,68,85,0.15)' }}
           >
-            <ProblemPanel problem={problem} />
+            {problem ? <ProblemPanel problem={problem} /> : <div className="p-6 text-on-surface-variant">Loading problem...</div>}
           </div>
 
           {/* Editor + Results */}

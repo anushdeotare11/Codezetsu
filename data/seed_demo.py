@@ -16,6 +16,16 @@ from models.schemas import ProfileModel, UserAchievementModel, UserSkillModel
 
 DEMO_USERS = [
     {
+        "id": "dev-user-001",
+        "username": "dev_warrior",
+        "display_name": "Dev Warrior",
+        "level": 5,
+        "xp": 1250,
+        "total_solved": 12,
+        "current_streak": 3,
+        "longest_streak": 7,
+    },
+    {
         "id": "demo-ninja",
         "username": "code_ninja",
         "display_name": "Code Ninja",

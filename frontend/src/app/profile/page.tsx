@@ -8,7 +8,8 @@ import {
 import SkillRadar from '@/components/SkillRadar';
 import XPBar from '@/components/XPBar';
 import AchievementBadge from '@/components/AchievementBadge';
-import { mockUser, mockSkills, mockSubmissions, mockAchievements, getLevelInfo } from '@/lib/mockData';
+import { getLevelInfo, mockAchievements, UserProfile, SkillData, Submission } from '@/lib/mockData';
+import { fetchUserProfile, fetchUserSkills, fetchSubmissionHistory, fetchUserStats } from '@/lib/api';
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
@@ -33,9 +34,38 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function ProfilePage() {
-  const levelInfo = getLevelInfo(mockUser.level);
-  const acceptedCount = mockSubmissions.filter(s => s.status === 'accepted').length;
-  const acceptanceRate = mockSubmissions.length > 0 ? Math.round((acceptedCount / mockSubmissions.length) * 100) : 0;
+  const [userProfile, setUserProfile] = React.useState<UserProfile | null>(null);
+  const [skills, setSkills] = React.useState<SkillData[]>([]);
+  const [submissions, setSubmissions] = React.useState<Submission[]>([]);
+  const [stats, setStats] = React.useState({ solved: 0, total: 0 });
+
+  React.useEffect(() => {
+    async function loadData() {
+      try {
+        const [profileRes, skillsRes, submissionsRes, statsRes] = await Promise.all([
+          fetchUserProfile(),
+          fetchUserSkills(),
+          fetchSubmissionHistory(20),
+          fetchUserStats()
+        ]);
+        setUserProfile(profileRes);
+        setSkills(skillsRes);
+        setSubmissions(submissionsRes);
+        setStats({ solved: statsRes.problems_solved || 0, total: statsRes.total_submissions || 0 });
+      } catch (err) {
+        console.error('Failed to load profile data', err);
+      }
+    }
+    loadData();
+  }, []);
+
+  if (!userProfile) {
+    return <div className="p-8 text-center text-on-surface-variant">Loading profile...</div>;
+  }
+
+  const levelInfo = getLevelInfo(userProfile.level);
+  const acceptedCount = submissions.filter(s => s.status === 'accepted').length;
+  const acceptanceRate = submissions.length > 0 ? Math.round((acceptedCount / submissions.length) * 100) : 0;
 
   return (
     <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
@@ -59,41 +89,41 @@ export default function ProfilePage() {
               boxShadow: '0 0 30px rgba(124,58,237,0.3)',
             }}
           >
-            {mockUser.displayName.charAt(0)}
+            {userProfile.displayName.charAt(0)}
           </div>
           <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-xs font-bold text-on-primary-container glow-primary">
-            {mockUser.level}
+            {userProfile.level}
           </div>
         </motion.div>
 
         {/* User Info */}
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-2xl font-bold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
-            {mockUser.displayName}
+            {userProfile.displayName}
           </h1>
-          <p className="text-sm text-on-surface-variant">@{mockUser.username}</p>
+          <p className="text-sm text-on-surface-variant">@{userProfile.username}</p>
           <div className="flex items-center gap-2 mt-2 justify-center md:justify-start">
             <span className="badge-boss px-2.5 py-0.5 rounded-full text-xs font-semibold">
               <Shield className="w-3 h-3 inline mr-1" />
-              Lv.{mockUser.level} {levelInfo.title}
+              Lv.{userProfile.level} {levelInfo.title}
             </span>
             <span className="text-xs text-on-surface-variant flex items-center gap-1">
               <Calendar className="w-3 h-3" />
-              Joined {mockUser.createdAt}
+              Joined {new Date(userProfile.createdAt).toLocaleDateString()}
             </span>
           </div>
 
           <div className="mt-4 max-w-md">
-            <XPBar currentXP={mockUser.xp} level={mockUser.level} showDetails={false} />
+            <XPBar currentXP={userProfile.xp} level={userProfile.level} showDetails={false} />
           </div>
         </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 gap-3 shrink-0">
           {[
-            { icon: CheckCircle2, label: 'Solved', value: '34', color: 'text-success' },
+            { icon: CheckCircle2, label: 'Solved', value: stats.solved.toString(), color: 'text-success' },
             { icon: Target, label: 'Accuracy', value: `${acceptanceRate}%`, color: 'text-secondary' },
-            { icon: Flame, label: 'Best Streak', value: `${mockUser.longestStreak}`, color: 'text-tertiary' },
+            { icon: Flame, label: 'Best Streak', value: `${userProfile.longestStreak}`, color: 'text-tertiary' },
             { icon: Code2, label: 'Fav Lang', value: 'Python', color: 'text-primary' },
           ].map((stat) => (
             <div key={stat.label} className="rounded-xl bg-surface-container-lowest/40 p-3 text-center min-w-[80px]">
@@ -107,7 +137,7 @@ export default function ProfilePage() {
 
       {/* Skill Radar + Achievements */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <SkillRadar data={mockSkills} size="lg" />
+        <SkillRadar data={skills} size="lg" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -144,7 +174,7 @@ export default function ProfilePage() {
           <h3 className="text-sm font-semibold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
             Submission History
           </h3>
-          <span className="label-competitive">{mockSubmissions.length} submissions</span>
+          <span className="label-competitive">{submissions.length} submissions</span>
         </div>
 
         {/* Table Header */}
@@ -157,7 +187,7 @@ export default function ProfilePage() {
           <span className="label-competitive text-right">Date</span>
         </div>
 
-        {mockSubmissions.map((sub, i) => (
+        {submissions.map((sub, i) => (
           <motion.div
             key={sub.id}
             initial={{ opacity: 0, x: -10 }}

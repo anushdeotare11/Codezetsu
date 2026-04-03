@@ -10,7 +10,8 @@ import XPBar from '@/components/XPBar';
 import AchievementBadge from '@/components/AchievementBadge';
 import { DashboardSkeleton } from '@/components/LoadingSkeleton';
 import { StreakFireAnimation } from '@/components/XPGainPopup';
-import { mockUser, mockSkills, mockSubmissions, mockAchievements } from '@/lib/mockData';
+import { mockAchievements, UserProfile, SkillData, Submission } from '@/lib/mockData';
+import { fetchUserProfile, fetchUserStats, fetchUserSkills, fetchSubmissionHistory } from '@/lib/api';
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
@@ -50,14 +51,35 @@ function timeAgo(dateStr: string): string {
 
 export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [stats, setStats] = useState({ solved: 0, total: 0 });
+  const [skills, setSkills] = useState<SkillData[]>([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
 
   useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
+    async function loadData() {
+      try {
+        const [profileRes, statsRes, skillsRes, submissionsRes] = await Promise.all([
+          fetchUserProfile(),
+          fetchUserStats(),
+          fetchUserSkills(),
+          fetchSubmissionHistory(5)
+        ]);
+        
+        setUserProfile(profileRes);
+        setStats({ solved: statsRes.problems_solved || 0, total: statsRes.total_submissions || 0 });
+        setSkills(skillsRes);
+        setSubmissions(submissionsRes);
+      } catch (err) {
+        console.error('Dashboard data load failed', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadData();
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !userProfile) {
     return <DashboardSkeleton />;
   }
 
@@ -73,7 +95,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
             Command Center
           </h1>
-          <p className="text-sm text-on-surface-variant mt-0.5">Welcome back, {mockUser.displayName}</p>
+          <p className="text-sm text-on-surface-variant mt-0.5">Welcome back, {userProfile.displayName}</p>
         </div>
         <Link href="/arena">
           <motion.button
@@ -91,7 +113,7 @@ export default function DashboardPage() {
         <StatsCard
           icon={Zap}
           label="Total XP"
-          value={mockUser.xp.toLocaleString()}
+          value={userProfile.xp.toLocaleString()}
           trend={{ value: '+125', positive: true }}
           accentColor="primary"
           delay={0}
@@ -99,14 +121,14 @@ export default function DashboardPage() {
         <StatsCard
           icon={Shield}
           label="Level"
-          value={mockUser.level}
+          value={userProfile.level}
           accentColor="secondary"
           delay={0.1}
         />
         <StatsCard
           icon={Flame}
           label="Streak"
-          value={<StreakFireAnimation streak={mockUser.currentStreak} />}
+          value={<StreakFireAnimation streak={userProfile.currentStreak} />}
           trend={{ value: '+1', positive: true }}
           accentColor="tertiary"
           delay={0.2}
@@ -114,7 +136,7 @@ export default function DashboardPage() {
         <StatsCard
           icon={CheckCircle2}
           label="Solved"
-          value="34"
+          value={stats.solved.toString()}
           trend={{ value: '+3', positive: true }}
           accentColor="success"
           delay={0.3}
@@ -122,13 +144,13 @@ export default function DashboardPage() {
       </div>
 
       {/* XP Progress */}
-      <XPBar currentXP={mockUser.xp} level={mockUser.level} />
+      <XPBar currentXP={userProfile.xp} level={userProfile.level} />
 
       {/* Charts + Submissions Row */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
         {/* Skill Radar (3 cols) */}
         <div className="lg:col-span-3">
-          <SkillRadar data={mockSkills} size="lg" />
+          <SkillRadar data={skills} size="lg" />
         </div>
 
         {/* Recent Submissions (2 cols) */}
@@ -142,11 +164,11 @@ export default function DashboardPage() {
             <h3 className="text-sm font-semibold text-on-surface" style={{ fontFamily: 'Space Grotesk' }}>
               Recent Submissions
             </h3>
-            <span className="label-competitive">{mockSubmissions.length} total</span>
+            <span className="label-competitive">{submissions.length} total</span>
           </div>
 
           <div className="space-y-2">
-            {mockSubmissions.map((sub, i) => (
+            {submissions.map((sub, i) => (
               <motion.div
                 key={sub.id}
                 initial={{ opacity: 0, x: 10 }}

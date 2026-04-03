@@ -4,12 +4,27 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy } from 'lucide-react';
 import LeaderboardTable from '@/components/LeaderboardTable';
-import { mockLeaderboard, mockUser } from '@/lib/mockData';
+import { LeaderboardEntry, mockUser } from '@/lib/mockData';
+import { fetchLeaderboard, fetchUserProfile } from '@/lib/api';
 
 const tabs = ['All Time', 'This Week', 'Today'];
 
 export default function LeaderboardPage() {
   const [activeTab, setActiveTab] = useState('All Time');
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string>('');
+
+  React.useEffect(() => {
+    async function load() {
+      const [boardData, userProfile] = await Promise.all([
+        fetchLeaderboard(10, activeTab === 'All Time' ? 'all' : activeTab === 'This Week' ? 'week' : 'today'),
+        fetchUserProfile()
+      ]);
+      setLeaderboard(boardData);
+      setCurrentUserId(userProfile.id);
+    }
+    load();
+  }, [activeTab]);
 
   return (
     <div className="p-6 md:p-8 max-w-5xl mx-auto space-y-6">
@@ -55,7 +70,7 @@ export default function LeaderboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <LeaderboardTable data={mockLeaderboard} currentUserId={mockUser.id} />
+        <LeaderboardTable data={leaderboard} currentUserId={currentUserId} />
       </motion.div>
     </div>
   );

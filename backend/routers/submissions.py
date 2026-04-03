@@ -46,10 +46,27 @@ async def submit_code(
     """
     # Find the problem
     problem = None
-    for p in SAMPLE_PROBLEMS:
-        if p["id"] == submission.problem_id:
-            problem = p
-            break
+    try:
+        from models.schemas import ProblemModel
+        query_res = await db.execute(select(ProblemModel).where(ProblemModel.id == str(submission.problem_id)))
+        problem_db = query_res.scalar_one_or_none()
+        if problem_db:
+            problem = {
+                "id": problem_db.id,
+                "title": problem_db.title,
+                "description": problem_db.description,
+                "difficulty": problem_db.difficulty,
+                "xp_reward": problem_db.xp_reward,
+                "test_cases": problem_db.test_cases
+            }
+    except Exception:
+        pass
+        
+    if not problem:
+        for p in SAMPLE_PROBLEMS:
+            if str(p["id"]) == str(submission.problem_id):
+                problem = p
+                break
     
     if not problem:
         raise HTTPException(status_code=404, detail=f"Problem not found: {submission.problem_id}")
