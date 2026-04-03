@@ -20,8 +20,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Codezetsu | The Adaptive Coding Arena",
-  description: "AI-powered adaptive coding platform. Battle challenges, level up your skills, and climb the leaderboard in the ultimate coding arena.",
+  title: "SkillSprint | The Adaptive Coding Arena",
+  description: "Enter the SkillSprint Arena — an AI-powered adaptive coding platform. Battle challenges, level up your skills, and dominate the leaderboard.",
+  keywords: "coding arena, AI coding, adaptive learning, programming challenges, gamified coding",
 };
 
 export default function RootLayout({
@@ -36,7 +37,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex pb-16 md:pb-0">
         <Sidebar />
-        <main className="flex-1 ml-0 md:ml-[240px] min-h-screen">
+        <main className="flex-1 ml-0 md:ml-[240px] min-h-screen relative z-10">
           {children}
         </main>
         <BottomNav />
