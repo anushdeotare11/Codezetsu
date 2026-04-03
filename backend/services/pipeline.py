@@ -5,10 +5,15 @@ Integrates AI endpoints efficiently with robust fallback handling and
 strictly standardized, internally validated output.
 """
 
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from services.ai_client import call_llm
 from services.ai_evaluator import evaluate_code
 from services.skill_analyzer import analyze_skills
 from services.challenge_generator import generate_ai_problem
+
+# Thread pool for running sync AI calls
+_executor = ThreadPoolExecutor(max_workers=4)
 
 
 def get_standard_output() -> dict:
@@ -98,8 +103,8 @@ def generate_insight(weakness: str, feedback: str) -> str:
         return f"Your biggest weakness is {clean} because of a system parsing error."
 
 
-def process_submission(problem: str, code: str, language: str) -> dict:
-    """Run the end-to-end AI evaluation pipeline for a user submission."""
+def _process_submission_sync(problem: str, code: str, language: str) -> dict:
+    """Synchronous version of process_submission (runs AI calls)."""
     raw_response = {}
     
     try:
@@ -131,3 +136,9 @@ def process_submission(problem: str, code: str, language: str) -> dict:
 
     # 3. Before returning output: validate all fields exist & map defaults
     return validate_and_fill(raw_response)
+
+
+async def process_submission(problem: str, code: str, language: str) -> dict:
+    """Run the end-to-end AI evaluation pipeline for a user submission (async wrapper)."""
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(_executor, _process_submission_sync, problem, code, language)
