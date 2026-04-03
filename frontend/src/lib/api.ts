@@ -392,7 +392,7 @@ export async function fetchLeaderboard(
   timeframe: 'all' | 'week' | 'today' = 'all'
 ): Promise<LeaderboardEntry[]> {
   try {
-    const response = await api.get(`/api/users/leaderboard?limit=${limit}`);
+    const response = await api.get(`/api/leaderboard?limit=${limit}`);
     const entries: ApiLeaderboardEntry[] = response.data;
     return entries.map(convertApiLeaderboardToFrontend);
   } catch (error) {

@@ -138,7 +138,7 @@ export default function ArenaPage() {
       />
 
       {/* Boss Fight Modal */}
-      {showBossFight && (
+      {showBossFight && problem && (
         <BossFight
           problem={problem}
           onAccept={() => setShowBossFight(false)}
