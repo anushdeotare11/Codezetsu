@@ -196,9 +196,56 @@ export async function fetchProblems(filters?: {
     if (filters?.difficulty) params.append('difficulty', filters.difficulty);
     if (filters?.topic) params.append('topic', filters.topic);
 
-    const response = await api.get(`/api/problems${params.toString() ? '?' + params.toString() : ''}`);
-    const apiProblems: ApiProblem[] = response.data;
-    return apiProblems.map(convertApiProblemToFrontend);
+    // Step 1: Fetch the lightweight list to get all problem IDs
+    const listResponse = await api.get(`/api/problems${params.toString() ? '?' + params.toString() : ''}`);
+    const problemList: Array<{ id: string; title: string; difficulty: string; topics?: string[]; xp_reward: number }> = listResponse.data;
+
+    if (!problemList || problemList.length === 0) {
+      return mockProblems;
+    }
+
+    // Step 2: Fetch full details for each problem in parallel
+    const fullProblems = await Promise.all(
+      problemList.map(async (p) => {
+        try {
+          const detailResponse = await api.get(`/api/problems/${p.id}`);
+          const fullProblem = detailResponse.data;
+          // Map backend field names to ApiProblem shape
+          return {
+            id: fullProblem.id,
+            title: fullProblem.title,
+            description: fullProblem.description || '',
+            difficulty: fullProblem.difficulty,
+            topic: (fullProblem.topics || [])[0] || '',
+            xp_reward: fullProblem.xp_reward,
+            time_limit_seconds: fullProblem.time_limit_seconds || 5,
+            constraints: fullProblem.constraints,
+            starter_code: fullProblem.starter_code || {},
+            test_cases: fullProblem.test_cases || [],
+            examples: fullProblem.examples || [],
+            hints: fullProblem.hints || [],
+            topics: fullProblem.topics || [],
+          } as ApiProblem & { topics: string[] };
+        } catch {
+          // Fallback to list-level data if detail fetch fails
+          return {
+            id: p.id,
+            title: p.title,
+            description: '',
+            difficulty: p.difficulty as ApiProblem['difficulty'],
+            topic: (p.topics || [])[0] || '',
+            xp_reward: p.xp_reward,
+            time_limit_seconds: 5,
+            topics: p.topics || [],
+          } as ApiProblem & { topics: string[] };
+        }
+      })
+    );
+
+    return fullProblems.map((p) => ({
+      ...convertApiProblemToFrontend(p),
+      topics: (p as ApiProblem & { topics: string[] }).topics || [],
+    }));
   } catch (error) {
     console.warn('Failed to fetch problems from API, using mock data:', error);
     return mockProblems;
