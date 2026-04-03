@@ -2,11 +2,10 @@
 challenge_generator.py - Problem selection and generation for SkillSprint.
 
 Selects or generates the next coding problem for a user by targeting specific weaknesses.
-Uses LLM for dynamic problem synthesis.
+LLM prompts optimized for token reduction and execution speed.
 """
 
 import json
-
 from services.ai_client import call_llm
 
 
@@ -14,76 +13,39 @@ FALLBACK_PROBLEM = {
     "title": "Basic Array Filter",
     "description": "Write a function that takes an array of integers and returns only the even numbers.",
     "examples": [
-        {"input": "[1, 2, 3, 4, 5, 6]", "output": "[2, 4, 6]"}
+        {"input": "[1, 2, 3]", "output": "[2]"}
     ],
     "tags": ["array", "filtering"]
 }
 
-
 def generate_ai_problem(weakness: str) -> dict:
-    """Generate a dynamic coding problem specifically targeting the identified weakness.
-
-    Args:
-        weakness: A string representing the weakest skill.
-
-    Returns:
-        dict: The problem definition containing title, description, examples, and tags.
-    """
+    """Generate a dynamic coding problem targeting the identified weakness."""
     prompt = (
-        "You are an expert coding challenge creator.\n"
-        f"The user has a weakness in: '{weakness}'.\n\n"
-        "Generate a targeted coding problem that helps them practice this specific weakness.\n"
-        "Respond STRICTLY with valid JSON ONLY in this exact format. Do not use markdown blocks:\n"
-        "{\n"
-        '  "title": "<creative string title>",\n'
-        '  "description": "<string problem statement>",\n'
-        '  "examples": [\n'
-        '    {"input": "<string>", "output": "<string>"}\n'
-        '  ],\n'
-        '  "tags": ["<string>", "<string>"]\n'
-        "}"
+        f"Create a short coding problem targeting user weakness: '{weakness}'.\n"
+        "Return ONLY JSON format:\n"
+        '{"title": "Str", "description": "Str", "examples": [{"input": "Str", "output": "Str"}], "tags": ["Str"]}'
     )
 
-    max_retries = 2
-    for attempt in range(max_retries):
+    for attempt in range(2):
         raw = call_llm(prompt)
-        
-        if raw == "AI_ERROR":
-            return FALLBACK_PROBLEM.copy()
+        if raw == "AI_ERROR": return FALLBACK_PROBLEM.copy()
 
-        # Clean JSON in case of markdown wrapping
-        clean_raw = raw.strip()
-        if clean_raw.startswith("```json"):
-            clean_raw = clean_raw[7:]
-        elif clean_raw.startswith("```"):
-            clean_raw = clean_raw[3:]
-            
-        if clean_raw.endswith("```"):
-            clean_raw = clean_raw[:-3]
-            
-        clean_raw = clean_raw.strip()
+        clean = raw.strip()
+        if clean.startswith("```json"): clean = clean[7:]
+        elif clean.startswith("```"): clean = clean[3:]
+        if clean.endswith("```"): clean = clean[:-3]
 
         try:
-            result = json.loads(clean_raw)
-            
-            # Make sure minimum required keys exist
-            if isinstance(result, dict) and "title" in result and "description" in result:
-                # Type coerce fallback
-                if "examples" not in result or not isinstance(result["examples"], list):
-                    result["examples"] = FALLBACK_PROBLEM["examples"]
-                    
-                if "tags" not in result or not isinstance(result["tags"], list):
-                    result["tags"] = [weakness] if isinstance(weakness, str) else ["general"]
-                    
-                return result
-                
+            res = json.loads(clean.strip())
+            if isinstance(res, dict) and "title" in res and "description" in res:
+                if not isinstance(res.get("examples"), list): res["examples"] = FALLBACK_PROBLEM["examples"]
+                if not isinstance(res.get("tags"), list): res["tags"] = [weakness] if isinstance(weakness, str) else ["general"]
+                return res
         except json.JSONDecodeError:
-            print(f"JSON decode failed for problem generation on attempt {attempt + 1}. Retrying...")
             continue
             
     return FALLBACK_PROBLEM.copy()
 
 
 def get_next_problem(problems: list, weakness: str) -> dict:
-    """Legacy wrapper: Ignore the static problems list and generate dynamically."""
     return generate_ai_problem(weakness)
