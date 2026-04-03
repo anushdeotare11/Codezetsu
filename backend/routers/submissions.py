@@ -14,9 +14,11 @@ from models.schemas import (
     SubmissionResponse,
     SubmissionResult,
     SubmissionStatus,
+    GamificationResult,
 )
 from services.code_executor import execute_code
 from services.pipeline import process_submission
+from services.gamification import process_gamification
 from routers.problems import SAMPLE_PROBLEMS
 
 router = APIRouter(prefix="/api/submissions", tags=["submissions"])
@@ -97,7 +99,22 @@ async def submit_code(
                 error_message += f"\nExpected: {expected}\nGot: {actual}"
             break
     
-    # Calculate XP earned (only if accepted)
+    # Determine if this is the first attempt
+    first_attempt = False
+    try:
+        count_result = await db.execute(
+            select(func.count(SubmissionModel.id)).where(
+                SubmissionModel.user_id == MOCK_USER_ID,
+                SubmissionModel.problem_id == submission.problem_id
+            )
+        )
+        count = count_result.scalar() or 0
+        first_attempt = (count == 0)
+    except Exception:
+        # Fallback if DB fails
+        first_attempt = True
+
+    # Calculate XP earned base (will be overwritten by true gamification logic)
     xp_earned = 0
     if final_status == SubmissionStatus.ACCEPTED:
         xp_earned = problem.get("xp_reward", 100)
@@ -143,13 +160,50 @@ async def submit_code(
             test_cases_passed=passed_cases,
             total_test_cases=total_cases,
             execution_time_ms=total_time_ms,
-            error_message=error_message
+            error_message=error_message,
+            xp_earned=0, # temp, updated below
+            ai_evaluation=ai_evaluation
         )
         db.add(new_submission)
         await db.commit()
     except Exception as e:
         # Log but don't fail the request if DB storage fails
         print(f"Warning: Could not store submission: {e}")
+
+    # Process final gamification metrics
+    gamification_result = None
+    try:
+        ai_score = ai_evaluation.get("score") if ai_evaluation else None
+        skill_scores = ai_evaluation.get("skill_scores") if ai_evaluation else None
+        
+        gam_res = await process_gamification(
+            user_id=MOCK_USER_ID,
+            problem_difficulty=problem.get("difficulty", "easy"),
+            is_accepted=(final_status == SubmissionStatus.ACCEPTED),
+            is_first_attempt=first_attempt,
+            ai_score=ai_score,
+            ai_skill_scores=skill_scores,
+            execution_time_ms=total_time_ms,
+            db=db
+        )
+        
+        gamification_result = GamificationResult(**gam_res)
+        xp_earned = gam_res.get("xp_earned", xp_earned)
+        
+        # Update submission with actual XP earned
+        try:
+            if final_status == SubmissionStatus.ACCEPTED:
+                await db.execute(
+                    SubmissionModel.__table__.update().
+                    where(SubmissionModel.id == submission_id).
+                    values(xp_earned=xp_earned)
+                )
+                await db.commit()
+        except Exception as e:
+            pass
+            
+    except Exception as e:
+        print(f"Warning: Gamification processing failed: {e}")
     
     return SubmissionResult(
         status=final_status,
@@ -158,7 +212,8 @@ async def submit_code(
         execution_time_ms=total_time_ms,
         error_message=error_message,
         xp_earned=xp_earned,
-        ai_evaluation=ai_evaluation
+        ai_evaluation=ai_evaluation,
+        gamification=gamification_result
     )
 
 

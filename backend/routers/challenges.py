@@ -172,7 +172,7 @@ async def get_random_challenge(
     if difficulty:
         filtered = [p for p in filtered if p["difficulty"] == difficulty.lower()]
     if topic:
-        filtered = [p for p in filtered if p["topic"] == topic.lower()]
+        filtered = [p for p in filtered if topic.lower() in [t.lower() for t in p.get("topics", [])]]
     
     if not filtered:
         raise HTTPException(status_code=404, detail="No matching problems found")
@@ -185,7 +185,7 @@ async def get_random_challenge(
         "title": problem["title"],
         "description": problem["description"],
         "difficulty": problem["difficulty"],
-        "topic": problem["topic"],
+        "topics": problem.get("topics", []),
         "xp_reward": problem["xp_reward"],
         "examples": problem.get("examples", []),
         "hints": problem.get("hints", [])

@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import init_db, settings
-from routers import problems_router, submissions_router, users_router, challenges_router, skills_router
+from routers import problems_router, submissions_router, users_router, challenges_router, skills_router, leaderboard_router
 from middleware import RateLimitMiddleware
 
 
@@ -66,6 +66,7 @@ app.include_router(submissions_router)
 app.include_router(users_router)
 app.include_router(challenges_router)
 app.include_router(skills_router)
+app.include_router(leaderboard_router)
 
 
 @app.get("/")
@@ -114,8 +115,10 @@ async def api_info():
             },
             "users": {
                 "me": "GET /api/users/me",
-                "stats": "GET /api/users/stats",
-                "leaderboard": "GET /api/users/leaderboard"
+                "stats": "GET /api/users/stats"
+            },
+            "leaderboard": {
+                "top": "GET /api/leaderboard"
             }
         },
         "documentation": "/docs",

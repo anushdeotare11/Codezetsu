@@ -28,8 +28,12 @@ You may assume that each input would have exactly one solution, and you may not 
 
 You can return the answer in any order.""",
         "difficulty": "easy",
-        "topic": "arrays",
-        "xp_reward": 100,
+        "difficulty_score": 2,
+        "topics": ["arrays", "hash_map"],
+        "skills_tested": ["algorithm", "data_structures"],
+        "source": "leetcode_dataset",
+        "source_id": "1",
+        "xp_reward": 50,
         "time_limit_seconds": 5,
         "constraints": "2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9",
         "starter_code": {
@@ -54,8 +58,12 @@ You can return the answer in any order.""",
 
 You must do this by modifying the input array in-place with O(1) extra memory.""",
         "difficulty": "easy",
-        "topic": "strings",
-        "xp_reward": 75,
+        "difficulty_score": 1,
+        "topics": ["strings", "two_pointers"],
+        "skills_tested": ["algorithm", "edge_cases"],
+        "source": "leetcode_dataset",
+        "source_id": "344",
+        "xp_reward": 50,
         "time_limit_seconds": 5,
         "constraints": "1 <= s.length <= 10^5\ns[i] is a printable ascii character",
         "starter_code": {
@@ -79,8 +87,12 @@ You must do this by modifying the input array in-place with O(1) extra memory.""
 
 Given n, calculate F(n).""",
         "difficulty": "easy",
-        "topic": "recursion",
-        "xp_reward": 100,
+        "difficulty_score": 2,
+        "topics": ["recursion", "dynamic_programming"],
+        "skills_tested": ["algorithm", "efficiency"],
+        "source": "leetcode_dataset",
+        "source_id": "509",
+        "xp_reward": 50,
         "time_limit_seconds": 5,
         "constraints": "0 <= n <= 30",
         "starter_code": {
@@ -109,8 +121,12 @@ An input string is valid if:
 2. Open brackets must be closed in the correct order.
 3. Every close bracket has a corresponding open bracket of the same type.""",
         "difficulty": "medium",
-        "topic": "stacks",
-        "xp_reward": 150,
+        "difficulty_score": 4,
+        "topics": ["stacks", "strings"],
+        "skills_tested": ["data_structures", "edge_cases"],
+        "source": "leetcode_dataset",
+        "source_id": "20",
+        "xp_reward": 100,
         "time_limit_seconds": 5,
         "constraints": "1 <= s.length <= 10^4\ns consists of parentheses only '()[]{}'",
         "starter_code": {
@@ -140,8 +156,12 @@ Merge nums1 and nums2 into a single array sorted in non-decreasing order.
 
 The final sorted array should be stored inside nums1. To accommodate this, nums1 has a length of m + n.""",
         "difficulty": "medium",
-        "topic": "arrays",
-        "xp_reward": 175,
+        "difficulty_score": 5,
+        "topics": ["arrays", "two_pointers", "sorting"],
+        "skills_tested": ["algorithm", "efficiency"],
+        "source": "leetcode_dataset",
+        "source_id": "88",
+        "xp_reward": 100,
         "time_limit_seconds": 5,
         "constraints": "nums1.length == m + n\nnums2.length == n\n0 <= m, n <= 200",
         "starter_code": {
@@ -172,8 +192,12 @@ If the number of keys exceeds the capacity from this operation, evict the least 
 
 The functions get and put must each run in O(1) average time complexity.""",
         "difficulty": "hard",
-        "topic": "design",
-        "xp_reward": 300,
+        "difficulty_score": 8,
+        "topics": ["design", "hash_map", "linked_list"],
+        "skills_tested": ["data_structures", "algorithm", "efficiency"],
+        "source": "leetcode_dataset",
+        "source_id": "146",
+        "xp_reward": 200,
         "time_limit_seconds": 10,
         "constraints": "1 <= capacity <= 3000\n0 <= key <= 10^4\n0 <= value <= 10^5\nAt most 2 * 10^5 calls will be made to get and put.",
         "starter_code": {
@@ -191,19 +215,20 @@ The functions get and put must each run in O(1) average time complexity.""",
 ]
 
 
-def _get_sample_problems_list(difficulty: Optional[str] = None, topic: Optional[str] = None) -> List[ProblemListResponse]:
+def _get_sample_problems_list(difficulty: Optional[str] = None, topics_filter: Optional[str] = None) -> List[ProblemListResponse]:
     """Get filtered sample problems as list responses."""
     filtered = SAMPLE_PROBLEMS
     if difficulty:
         filtered = [p for p in filtered if p["difficulty"] == difficulty.lower()]
-    if topic:
-        filtered = [p for p in filtered if p["topic"] == topic.lower()]
+    if topics_filter:
+        filtered = [p for p in filtered if topics_filter.lower() in [t.lower() for t in p["topics"]]]
     return [
         ProblemListResponse(
             id=p["id"],
             title=p["title"],
             difficulty=p["difficulty"],
-            topic=p["topic"],
+            difficulty_score=p.get("difficulty_score"),
+            topics=p["topics"],
             xp_reward=p["xp_reward"]
         )
         for p in filtered
@@ -220,13 +245,17 @@ def _get_sample_problem(problem_id: str) -> Optional[ProblemResponse]:
                 title=p["title"],
                 description=p["description"],
                 difficulty=Difficulty(p["difficulty"]),
-                topic=p["topic"],
+                difficulty_score=p.get("difficulty_score"),
+                topics=p["topics"],
+                skills_tested=p.get("skills_tested", []),
                 xp_reward=p["xp_reward"],
                 time_limit_seconds=p["time_limit_seconds"],
                 constraints=p.get("constraints"),
                 starter_code=p.get("starter_code"),
                 examples=p.get("examples"),
                 hints=p.get("hints"),
+                source=p.get("source"),
+                source_id=p.get("source_id"),
                 created_at=datetime.now()
             )
     return None
@@ -244,13 +273,19 @@ async def list_problems(
         
         if difficulty:
             query = query.where(ProblemModel.difficulty == difficulty.lower())
-        if topic:
-            query = query.where(ProblemModel.topic == topic.lower())
+        # Note: topic filtering on JSON array requires contains check
+        # For now, we filter in-memory for DB results as well
         
         result = await db.execute(query)
         problems = result.scalars().all()
         
         if problems:
+            # Apply topic filter in-memory for JSON array field
+            if topic:
+                problems = [
+                    p for p in problems
+                    if p.topics and topic.lower() in [t.lower() for t in p.topics]
+                ]
             return problems
     except Exception as e:
         # DB not available, use sample data
@@ -288,7 +323,10 @@ async def get_problem(
 @router.get("/topics/list")
 async def list_topics():
     """Get list of all available topics."""
-    topics = set(p["topic"] for p in SAMPLE_PROBLEMS)
+    topics = set()
+    for p in SAMPLE_PROBLEMS:
+        for t in p["topics"]:
+            topics.add(t)
     return {"topics": sorted(topics)}
 
 

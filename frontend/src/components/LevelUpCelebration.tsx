@@ -16,6 +16,30 @@ export default function LevelUpCelebration({ show, newLevel, levelTitle, onCompl
 
   useEffect(() => {
     if (show) {
+      // Play dramatic level-up sound effect
+      try {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        // Power-up swoop
+        osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.4); // A5
+        
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0);
+        
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 1.0);
+      } catch (e) {
+        console.log('Audio not supported or auto-play blocked', e);
+      }
+
       // Generate celebration particles
       const newParticles = Array.from({ length: 50 }).map((_, i) => ({
         id: i,

@@ -1,10 +1,10 @@
 """Database models and Pydantic schemas."""
 
-from datetime import datetime
+from datetime import datetime, date
 from enum import Enum
 from typing import Optional, List, Any
 from pydantic import BaseModel, Field
-from sqlalchemy import Column, String, Integer, Text, DateTime, JSON, ForeignKey, Float, Boolean
+from sqlalchemy import Column, String, Integer, Text, DateTime, Date, JSON, ForeignKey, Float, Boolean, Numeric, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -28,10 +28,13 @@ class ProfileModel(Base):
     total_solved = Column(Integer, default=0)
     current_streak = Column(Integer, default=0)
     longest_streak = Column(Integer, default=0)
+    last_solve_date = Column(Date, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
     submissions = relationship("SubmissionModel", back_populates="profile")
+    skills = relationship("UserSkillModel", back_populates="profile")
+    achievements = relationship("UserAchievementModel", back_populates="profile")
 
 
 class ProblemModel(Base):
@@ -42,7 +45,9 @@ class ProblemModel(Base):
     title = Column(String(200), nullable=False)
     description = Column(Text, nullable=False)
     difficulty = Column(String(20), nullable=False)  # easy, medium, hard, boss
-    topic = Column(String(50), nullable=False)
+    difficulty_score = Column(Integer, nullable=True)  # 1-10 numeric scale
+    topics = Column(JSON, nullable=False, default=list)  # ['arrays', 'dynamic_programming']
+    skills_tested = Column(JSON, nullable=False, default=list)  # ['algorithm', 'edge_cases']
     xp_reward = Column(Integer, default=100)
     time_limit_seconds = Column(Integer, default=10)
     constraints = Column(Text)
@@ -50,6 +55,8 @@ class ProblemModel(Base):
     test_cases = Column(JSON, nullable=False)  # [{"input": "...", "expected": "..."}]
     examples = Column(JSON)  # [{"input": "...", "output": "...", "explanation": "..."}]
     hints = Column(JSON)  # ["hint1", "hint2"]
+    source = Column(String(50), nullable=True)  # 'codeforces', 'leetcode_dataset', 'ai_generated'
+    source_id = Column(String(100), nullable=True)  # original problem ID from source
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
@@ -70,10 +77,44 @@ class SubmissionModel(Base):
     total_test_cases = Column(Integer, default=0)
     execution_time_ms = Column(Float)
     error_message = Column(Text)
+    xp_earned = Column(Integer, default=0)
+    ai_evaluation = Column(JSON, nullable=True)  # {score, feedback, weaknesses[], suggestions[]}
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     profile = relationship("ProfileModel", back_populates="submissions")
     problem = relationship("ProblemModel", back_populates="submissions")
+
+
+class UserSkillModel(Base):
+    """User skill scores - updated after each submission."""
+    __tablename__ = "user_skills"
+    __table_args__ = (
+        UniqueConstraint('user_id', 'skill_name', name='uq_user_skill'),
+    )
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String, ForeignKey("profiles.id"), nullable=False)
+    skill_name = Column(String(50), nullable=False)  # 'algorithm', 'data_structures', etc.
+    score = Column(Numeric(4, 2), default=5.0)  # 1.0 to 10.0
+    total_assessments = Column(Integer, default=0)
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    
+    profile = relationship("ProfileModel", back_populates="skills")
+
+
+class UserAchievementModel(Base):
+    """User achievements - unlocked badges."""
+    __tablename__ = "user_achievements"
+    __table_args__ = (
+        UniqueConstraint('user_id', 'achievement_key', name='uq_user_achievement'),
+    )
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String, ForeignKey("profiles.id"), nullable=False)
+    achievement_key = Column(String(50), nullable=False)  # 'first_solve', 'streak_7', etc.
+    unlocked_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    profile = relationship("ProfileModel", back_populates="achievements")
 
 
 # =====================
@@ -113,10 +154,14 @@ class ProblemBase(BaseModel):
     title: str
     description: str
     difficulty: Difficulty
-    topic: str
+    difficulty_score: Optional[int] = None
+    topics: List[str] = []
+    skills_tested: List[str] = []
     xp_reward: int = 100
     time_limit_seconds: int = 10
     constraints: Optional[str] = None
+    source: Optional[str] = None
+    source_id: Optional[str] = None
 
 
 class ProblemCreate(ProblemBase):
@@ -141,7 +186,8 @@ class ProblemListResponse(BaseModel):
     id: str
     title: str
     difficulty: str
-    topic: str
+    difficulty_score: Optional[int] = None
+    topics: List[str] = []
     xp_reward: int
     
     class Config:
@@ -163,6 +209,7 @@ class SubmissionResponse(BaseModel):
     total_test_cases: int
     execution_time_ms: Optional[float] = None
     error_message: Optional[str] = None
+    xp_earned: int = 0
     
     class Config:
         from_attributes = True
@@ -179,6 +226,15 @@ class AIEvaluation(BaseModel):
     explanation: str = ""
 
 
+class GamificationResult(BaseModel):
+    """Results from processing gamification rules after submission."""
+    xp_earned: int = 0
+    level_up: bool = False
+    new_level: Optional[int] = None
+    old_level: Optional[int] = None
+    achievements_unlocked: List[str] = []
+
+
 class SubmissionResult(BaseModel):
     status: SubmissionStatus
     test_cases_passed: int
@@ -187,6 +243,7 @@ class SubmissionResult(BaseModel):
     error_message: Optional[str] = None
     xp_earned: int = 0
     ai_evaluation: Optional[AIEvaluation] = None
+    gamification: Optional[GamificationResult] = None
 
 
 # ----- User Schemas -----
@@ -212,6 +269,25 @@ class ProfileResponse(BaseModel):
     total_solved: int
     current_streak: int
     longest_streak: int
+    
+    class Config:
+        from_attributes = True
+
+
+# ----- Skill Schemas -----
+
+class UserSkillResponse(BaseModel):
+    skill_name: str
+    score: float
+    total_assessments: int
+    
+    class Config:
+        from_attributes = True
+
+
+class UserAchievementResponse(BaseModel):
+    achievement_key: str
+    unlocked_at: datetime
     
     class Config:
         from_attributes = True

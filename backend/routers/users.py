@@ -99,42 +99,6 @@ async def get_user_stats(db: AsyncSession = Depends(get_db)):
         )
 
 
-@router.get("/leaderboard")
-async def get_leaderboard(limit: int = 10, db: AsyncSession = Depends(get_db)):
-    """Get top users by XP."""
-    try:
-        result = await db.execute(
-            select(ProfileModel)
-            .order_by(ProfileModel.xp.desc())
-            .limit(limit)
-        )
-        profiles = result.scalars().all()
-        
-        if profiles:
-            return [
-                {
-                    "rank": i + 1,
-                    "username": p.username,
-                    "display_name": p.display_name,
-                    "level": p.level,
-                    "xp": p.xp,
-                    "total_solved": p.total_solved,
-                }
-                for i, p in enumerate(profiles)
-            ]
-    except Exception:
-        pass
-    
-    # Return mock leaderboard
-    return [
-        {"rank": 1, "username": "code_ninja", "display_name": "Code Ninja", "level": 15, "xp": 5420, "total_solved": 87},
-        {"rank": 2, "username": "algo_master", "display_name": "Algorithm Master", "level": 14, "xp": 4850, "total_solved": 72},
-        {"rank": 3, "username": "dev_warrior", "display_name": "Dev Warrior", "level": 12, "xp": 3920, "total_solved": 58},
-        {"rank": 4, "username": "byte_crusher", "display_name": "Byte Crusher", "level": 11, "xp": 3450, "total_solved": 51},
-        {"rank": 5, "username": "syntax_sage", "display_name": "Syntax Sage", "level": 10, "xp": 2980, "total_solved": 45},
-    ]
-
-
 @router.get("/{user_id}", response_model=ProfileResponse)
 async def get_user_profile(user_id: str, db: AsyncSession = Depends(get_db)):
     """Get a user's public profile."""

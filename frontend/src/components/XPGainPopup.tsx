@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, Star, Flame } from 'lucide-react';
 
@@ -12,6 +12,32 @@ interface XPGainPopupProps {
 }
 
 export default function XPGainPopup({ show, xpAmount, bonusText, position }: XPGainPopupProps) {
+  useEffect(() => {
+    if (show) {
+      // Play brief ping sound effect
+      try {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.frequency.setValueAtTime(1046.50, ctx.currentTime); // C6
+        
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+        
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.3);
+      } catch (e) {
+        console.log('Audio not supported or auto-play blocked', e);
+      }
+    }
+  }, [show]);
+
   const posStyle = position 
     ? { left: position.x, top: position.y } 
     : { right: 32, top: 100 };

@@ -15,6 +15,32 @@ export default function AchievementUnlock({ achievement, onComplete }: Achieveme
 
   useEffect(() => {
     if (achievement) {
+      // Play celebratory sound effect using Web Audio API
+      try {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        // Tada chord arpeggio
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+        osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+        osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2); // G5
+        osc.frequency.setValueAtTime(1046.50, ctx.currentTime + 0.3); // C6
+        
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+        
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.8);
+      } catch (e) {
+        console.log('Audio not supported or auto-play blocked', e);
+      }
+
       // Generate radial particles
       const newParticles = Array.from({ length: 24 }).map((_, i) => ({
         id: i,
