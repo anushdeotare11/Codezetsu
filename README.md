@@ -1,6 +1,20 @@
-# SkillSprint — The Adaptive AI Coding Arena
+# ⚡ SkillSprint — The Adaptive AI Coding Arena
 
-> **Transform the way developers grow.** SkillSprint is an AI-powered adaptive coding platform that evaluates your code like a senior engineer, maps your skill gaps, and generates personalized challenges to make you better — fast.
+<div align="center">
+
+![SkillSprint Banner](https://img.shields.io/badge/SkillSprint-Adaptive%20Arena-7C3AED?style=for-the-badge&logo=lightning&logoColor=white)
+
+**An AI-powered, gamified coding challenge platform that adapts to your skill level in real-time.**
+
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python)](https://www.python.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+
+[🎮 Live Demo](#) · [📖 Documentation](#api-reference) · [🐛 Report Bug](../../issues) · [✨ Request Feature](../../issues)
+
+</div>
 
 ---
 
@@ -14,54 +28,58 @@
 - [Database Schema](#database-schema)
 - [AI Engine](#ai-engine)
 - [Gamification System](#gamification-system)
+- [Design System](#design-system)
 - [API Reference](#api-reference)
 - [Getting Started](#getting-started)
 - [Environment Variables](#environment-variables)
 - [Deployment](#deployment)
+- [Running Tests](#running-tests)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
 ## Overview
 
-SkillSprint is an adaptive coding platform built for the next generation of developers. Unlike static platforms where everyone gets the same problems in the same order, SkillSprint uses large language models to **watch how you code**, identify where you struggle, and **generate the exact challenge you need next**.
+**SkillSprint** is a next-generation coding practice platform that transforms the way developers grow. Unlike static platforms where everyone gets the same problems in the same order, SkillSprint uses large language models to **watch how you code**, identify where you struggle, and **generate the exact challenge you need next**.
 
-The platform tracks 6 core skill dimensions — algorithm knowledge, data structures, code efficiency, edge case handling, code readability, and problem-solving approach — and continuously adapts the difficulty and topic of challenges based on your real-time performance.
+The platform tracks 6 core skill dimensions — Algorithm Knowledge, Data Structures, Code Efficiency, Edge Case Handling, Readability, and Problem Solving — and continuously adapts difficulty and topics based on your real-time performance.
 
-Built as a full-stack monorepo with a Next.js frontend, FastAPI backend, Supabase database, and a dual-LLM AI layer (Groq + Gemini), SkillSprint runs entirely on free-tier infrastructure with zero cost to operate.
+Built as a full-stack monorepo with a **Next.js frontend**, **FastAPI backend**, **Supabase database**, and a **dual-LLM AI layer** (Groq + Gemini), SkillSprint runs entirely on free-tier infrastructure with zero cost to operate.
 
 ---
 
 ## Key Features
 
-### Adaptive AI Engine
-The core of SkillSprint is its AI evaluation and adaptation loop. Every time you submit code, the AI evaluator scores it across 6 dimensions, identifies your top 3 weaknesses, and triggers the challenge generator to create a new problem that specifically targets those gaps. The system scales difficulty based on your current level, ensuring you are always challenged but never overwhelmed.
+### 🤖 Adaptive AI Engine
+The core of SkillSprint is its AI evaluation and adaptation loop. Every time you submit code, the AI evaluator scores it across 6 dimensions, identifies your top 3 weaknesses, and triggers the challenge generator to create a new problem specifically targeting those gaps. The system scales difficulty based on your current level — always challenging, never overwhelming.
 
-### VS Code-Quality Code Editor
-The arena is powered by Monaco Editor — the same editor that runs inside VS Code. You get syntax highlighting, autocomplete, and multi-language support (Python, JavaScript, C++, Java) without leaving the browser.
+### 🏟️ VS Code-Quality Code Editor
+The arena is powered by **Monaco Editor** — the same editor inside VS Code. You get syntax highlighting, autocomplete, and multi-language support (Python, JavaScript, C++, Java) without leaving the browser.
 
-### Real-Time AI Code Evaluation
-When you submit a solution, the AI acts as a senior engineer reviewing your PR. It analyzes correctness, time complexity, space complexity, readability, edge case coverage, and overall problem-solving approach. You get a score out of 10, specific feedback, identified weaknesses, and actionable suggestions — all in under 2 seconds.
+### 🔍 Real-Time AI Code Evaluation
+When you submit a solution, the AI acts as a senior engineer reviewing your PR. It analyzes correctness, time complexity, space complexity, readability, edge case coverage, and overall approach — returning a score out of 10, specific feedback, identified weaknesses, and actionable suggestions, all in under 2 seconds.
 
-### Personalized Challenge Generation
-When the AI detects a skill gap (e.g., you consistently underperform on dynamic programming or edge case handling), it generates a brand new problem on the fly, targeted precisely at that weakness. No two users get exactly the same learning path.
+### 📊 Personalized Challenge Generation
+When the AI detects a skill gap (e.g., consistent underperformance on dynamic programming or edge cases), it generates a brand-new problem on the fly targeted precisely at that weakness. No two users get exactly the same learning path.
 
-### Boss Fight Mode
-At key progression milestones, you face a "Boss Fight" — a multi-skill, harder-than-normal challenge with a dramatic UI, health bar, and defeat animation. Defeating a Boss earns 500 XP and unlocks the Boss Slayer achievement.
+### ⚔️ Boss Fight Mode
+At key progression milestones, you face a "Boss Fight" — a multi-skill, harder-than-normal challenge with a dramatic UI, health bar, and defeat animation. Defeating a Boss earns **500 XP** and unlocks the Boss Slayer achievement.
 
-### Skill Radar Chart
-Your dashboard features a hexagonal radar chart that visualizes your 6 skill scores in real time. As you submit more code, the chart evolves — shrinking in weak areas that need work, expanding in areas where you excel. This gives you an instant, honest picture of where you stand.
+### 📈 Skill Radar Chart
+Your dashboard features a hexagonal radar chart visualizing your 6 skill scores in real time. As you submit more code, the chart evolves — shrinking in weak areas, expanding where you excel. An instant, honest picture of where you stand.
 
-### Gamified Progression
+### 🎮 Gamified Progression
 SkillSprint uses a full XP and leveling system with 10 tiers (Novice Coder → Arena Champion), daily streak tracking, and 10 unique achievements. Animations, level-up celebrations, and streak fire effects make the learning loop genuinely engaging.
 
-### Global Leaderboard
+### 🏆 Global Leaderboard
 A ranked leaderboard shows all users by XP, level, current streak, and problems solved. A materialized database view ensures fast queries even at scale.
 
-### Progressive Hint System
-Stuck on a problem? SkillSprint offers a hint system that reveals clues progressively — so you're guided toward the answer without having it handed to you.
+### 💡 Progressive Hint System
+Stuck on a problem? SkillSprint reveals clues progressively — guiding you toward the answer without handing it to you.
 
-### Secure Code Execution
-All submitted code runs inside the Piston API's isolated sandbox containers with a 10-second timeout. This ensures security and prevents malicious code from affecting the platform.
+### 🔒 Secure Code Execution
+All submitted code runs inside the **Piston API's** isolated sandbox containers with a 10-second timeout, ensuring security and preventing malicious code from affecting the platform.
 
 ---
 
@@ -69,54 +87,50 @@ All submitted code runs inside the Piston API's isolated sandbox containers with
 
 ### Frontend
 
-| Tool | Purpose |
-|------|---------|
-| **Next.js 14 (App Router)** | SSR, file-based routing, fast setup |
-| **TypeScript** | Type safety across the entire frontend |
-| **Tailwind CSS** | Utility-first styling with dark dungeon theme |
-| **Monaco Editor** (`@monaco-editor/react`) | VS Code-quality in-browser code editor |
-| **Recharts / Chart.js** | Skill radar charts and progress visualization |
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 16 (App Router)** | React framework with SSR and file-based routing |
+| **TypeScript** | Type-safe development across the entire frontend |
+| **Tailwind CSS 4** | Utility-first styling with dark dungeon theme |
+| **Monaco Editor** | VS Code-quality in-browser code editing |
 | **Framer Motion** | Smooth animations for XP gains, level-ups, and boss fights |
-| **Lucide React** | Icon system |
+| **Recharts / Chart.js** | Skill radar chart and progress visualization |
+| **Lucide React** | Beautiful iconography |
 | **Axios** | HTTP client for API calls |
 
 ### Backend
 
-| Tool | Purpose |
-|------|---------|
-| **FastAPI (Python)** | High-performance async REST API framework |
+| Technology | Purpose |
+|------------|---------|
+| **FastAPI** | High-performance async Python REST API |
 | **Uvicorn** | ASGI server for FastAPI |
+| **SQLAlchemy** | Async ORM for database interactions |
+| **PostgreSQL (Supabase)** | Primary database with auth and real-time subscriptions |
 | **Pydantic** | Request/response validation and data modeling |
 | **python-dotenv** | Environment variable management |
 
 ### AI / LLM Layer
 
-| Tool | Purpose | Rate Limits |
-|------|---------|-------------|
+| Technology | Purpose | Rate Limits |
+|------------|---------|-------------|
 | **Groq API** (Primary) | Ultra-fast inference with Llama 3.3 70B | 30 RPM, 1,000 RPD |
-| **Google Gemini API** (Fallback) | High-quality reasoning fallback | 15 RPM, 1,000 RPD |
+| **Google Gemini** (Fallback) | High-quality reasoning fallback | 15 RPM, 1,000 RPD |
 
-Groq is used as the primary LLM provider due to its sub-second inference speed. If Groq's rate limits are hit, the system automatically fails over to Gemini with zero user impact. Both APIs are completely free with no credit card required.
-
-### Database
-
-| Tool | Purpose |
-|------|---------|
-| **Neondb** | PostgreSQL database, user authentication, real-time subscriptions, file storage |
+Groq is used as the primary provider due to its sub-second inference speed. If rate limits are hit, the system automatically fails over to Gemini with zero user impact. Both APIs are free with no credit card required.
 
 ### Code Execution
 
-| Tool | Purpose |
-|------|---------|
-| **Piston API** | Sandboxed code execution supporting 60+ languages, no auth required |
+| Technology | Purpose |
+|------------|---------|
+| **Piston API** | Sandboxed code execution (60+ languages, no auth required) |
 | **Judge0 CE** | Self-hosted alternative for production environments |
 
 ### Problem Sources
 
 | Source | Method | Volume |
 |--------|--------|--------|
-| **Codeforces API** | Official REST API, no auth needed | 2,000+ problems with tags and difficulty ratings |
-| **Kaggle LeetCode Dataset** | CSV/JSON download | Problem statements, difficulty, topics, test cases |
+| **Codeforces API** | Official REST API, no auth needed | 2,000+ problems |
+| **Kaggle LeetCode Dataset** | CSV/JSON download | Problem statements, difficulty, test cases |
 | **HuggingFace LeetCode Dataset** | Dataset download | Python problems with test cases |
 | **LLM-Generated Problems** | Groq/Gemini API | Unlimited, personalized, dynamically created |
 
@@ -127,7 +141,7 @@ Groq is used as the primary LLM provider due to its sub-second inference speed. 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     BROWSER (User)                       │
-│              Next.js 14 — App Router (SSR)               │
+│              Next.js 16 — App Router (SSR)               │
 │   Monaco Editor │ Recharts │ Framer Motion │ Lucide      │
 └──────────────────────────┬──────────────────────────────┘
                            │ HTTP / REST
@@ -150,9 +164,9 @@ Groq is used as the primary LLM provider due to its sub-second inference speed. 
 └──────────────────────────┬──────────────────────────────┘
                            │ PostgreSQL / REST
 ┌──────────────────────────▼──────────────────────────────┐
-│                    Supabase                              │
-│   profiles │ problems │ submissions │ user_skills       │
-│   user_achievements │ leaderboard (view)                │
+│                       Supabase                           │
+│   profiles │ problems │ submissions │ user_skills        │
+│   user_achievements │ leaderboard (materialized view)    │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -163,7 +177,7 @@ Groq is used as the primary LLM provider due to its sub-second inference speed. 
 4. Backend sends code + execution results to Groq (or Gemini fallback) for AI evaluation
 5. AI returns a structured JSON evaluation with scores, weaknesses, and suggestions
 6. Backend updates `user_skills`, awards XP, checks for achievement unlocks, updates streak
-7. Frontend renders the evaluation result, updates the radar chart, and triggers any animations
+7. Frontend renders the evaluation result, updates the radar chart, and triggers animations
 8. AI skill analyzer identifies top weakness → challenge generator creates a targeted next problem
 
 ---
@@ -172,7 +186,7 @@ Groq is used as the primary LLM provider due to its sub-second inference speed. 
 
 ```
 skillsprint/
-├── frontend/                         # Next.js 14 App
+├── frontend/                         # Next.js 16 App
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── layout.tsx            # Root layout with sidebar navigation
@@ -194,39 +208,40 @@ skillsprint/
 │   │   │   ├── LeaderboardTable.tsx  # Rankings table
 │   │   │   ├── BossFight.tsx         # Boss challenge UI with health bar
 │   │   │   └── Sidebar.tsx           # Navigation sidebar
-│   │   ├── lib/
-│   │   │   ├── api.ts                # Axios API client functions
-│   │   │   └── supabase.ts           # Supabase browser client
-│   │   └── styles/
-│   │       └── globals.css           # Global styles + dungeon dark theme
-│   ├── package.json
-│   └── next.config.js
+│   │   └── lib/
+│   │       ├── api.ts                # Axios API client functions
+│   │       ├── supabase.ts           # Supabase browser client
+│   │       └── mockData.ts           # Demo / fallback data
+│   └── public/                       # Static assets
 │
 ├── backend/                          # FastAPI Application
 │   ├── main.py                       # FastAPI app entry point + CORS config
+│   ├── config.py                     # Configuration & environment settings
+│   ├── middleware.py                 # Rate limiting & security
 │   ├── routers/
 │   │   ├── problems.py               # Problem CRUD + filtering endpoints
 │   │   ├── submissions.py            # Submission + code execution pipeline
 │   │   ├── users.py                  # User profile + stats + skill endpoints
 │   │   ├── challenges.py             # AI-powered challenge generation
+│   │   ├── skills.py                 # Skill analysis endpoints
 │   │   └── leaderboard.py            # Rankings + leaderboard queries
 │   ├── services/
+│   │   ├── ai_client.py              # Groq/Gemini integration & LLM routing
 │   │   ├── ai_evaluator.py           # LLM-based code quality evaluation
 │   │   ├── challenge_generator.py    # Dynamic problem generation via LLM
 │   │   ├── skill_analyzer.py         # Skill dimension scoring + gap detection
-│   │   ├── code_executor.py          # Piston / Judge0 integration
+│   │   ├── code_executor.py          # Piston API integration
 │   │   └── gamification.py           # XP awards, leveling, achievements, streaks
 │   ├── models/
 │   │   └── schemas.py                # Pydantic request/response models
-│   ├── config.py                     # Environment variable config
-│   ├── requirements.txt
-│   └── .env                          # Environment variables (not committed)
+│   └── requirements.txt
 │
-├── data/                             # Problem datasets
+├── data/                             # Problem datasets & seeding
 │   ├── codeforces_problems.json      # Problems fetched from Codeforces API
-│   ├── leetcode_dataset.csv          # Kaggle LeetCode dataset
+│   ├── fetch_codeforces.py           # Script to fetch from Codeforces
 │   └── seed_db.py                    # Script to seed Supabase with problems
 │
+├── Gamification Reports/             # Design documentation
 └── README.md
 ```
 
@@ -296,7 +311,7 @@ CREATE TABLE submissions (
 CREATE TABLE user_skills (
   id                SERIAL PRIMARY KEY,
   user_id           UUID REFERENCES profiles(id),
-  skill_name        TEXT NOT NULL,         -- 'algorithm_knowledge', 'data_structures', etc.
+  skill_name        TEXT NOT NULL,
   score             DECIMAL(4,2) DEFAULT 5.0,  -- 1.0 to 10.0
   total_assessments INTEGER DEFAULT 0,
   updated_at        TIMESTAMPTZ DEFAULT NOW(),
@@ -304,13 +319,16 @@ CREATE TABLE user_skills (
 );
 ```
 
-Tracked skill dimensions:
-- `algorithm_knowledge` — Ability to select and apply the correct algorithm
-- `data_structures` — Appropriate use of arrays, trees, graphs, heaps, etc.
-- `code_efficiency` — Time and space complexity awareness
-- `edge_cases` — Handling of boundary conditions and invalid inputs
-- `readability` — Code organization, naming, and clarity
-- `problem_solving` — Overall approach and decomposition
+**Tracked skill dimensions:**
+
+| Dimension | Description |
+|-----------|-------------|
+| `algorithm_knowledge` | Ability to select and apply the correct algorithm |
+| `data_structures` | Appropriate use of arrays, trees, graphs, heaps, etc. |
+| `code_efficiency` | Time and space complexity awareness |
+| `edge_cases` | Handling of boundary conditions and invalid inputs |
+| `readability` | Code organization, naming, and clarity |
+| `problem_solving` | Overall approach and decomposition |
 
 ### `user_achievements` — Unlocked achievements per user
 
@@ -331,8 +349,8 @@ CREATE VIEW leaderboard AS
 SELECT
   p.id, p.username, p.display_name, p.avatar_url,
   p.xp, p.level, p.current_streak,
-  COUNT(DISTINCT s.problem_id) FILTER (WHERE s.status = 'accepted') as problems_solved,
-  RANK() OVER (ORDER BY p.xp DESC) as rank
+  COUNT(DISTINCT s.problem_id) FILTER (WHERE s.status = 'accepted') AS problems_solved,
+  RANK() OVER (ORDER BY p.xp DESC) AS rank
 FROM profiles p
 LEFT JOIN submissions s ON p.id = s.user_id
 GROUP BY p.id;
@@ -344,7 +362,7 @@ GROUP BY p.id;
 
 ### Code Evaluator
 
-Every submission is analyzed by the LLM against 6 dimensions. The evaluator prompt includes the problem title, description, the user's code, the language, and the test case pass rate. It returns a structured JSON object:
+Every submission is analyzed by the LLM across 6 dimensions. The evaluator prompt includes the problem title, description, the user's code, language, and test case pass rate. It returns a structured JSON object:
 
 ```json
 {
@@ -380,13 +398,13 @@ After each evaluation, the skill analyzer:
 
 ### Challenge Generator
 
-The challenge generator creates a new, unique coding problem targeting a specific weakness area. It respects the user's current level and scales difficulty accordingly. The output is a fully-formed problem object including title, description, examples, hidden test cases, hints, topics, and the optimal approach's time complexity target.
+The challenge generator creates a new, unique coding problem targeting a specific weakness area. It respects the user's current level and scales difficulty accordingly. Output includes title, description, examples, hidden test cases, hints, topics, and the optimal approach's time complexity target.
 
 ### LLM Routing & Fallback
 
 All LLM calls go through a routing layer that:
-- Sends requests to **Groq** (Llama 3.3 70B) as the primary — typical latency under 1 second
-- Automatically retries with **Gemini 2.5 Flash** if Groq returns a 429 rate limit error
+- Sends requests to **Groq** (Llama 3.3 70B) as primary — typical latency under 1 second
+- Automatically retries with **Gemini** if Groq returns a 429 rate limit error
 - Retries with a stricter JSON-only prompt if the response fails to parse
 - Logs all failures for monitoring
 
@@ -394,17 +412,17 @@ All LLM calls go through a routing layer that:
 
 ## Gamification System
 
-### XP Awards
+### XP Rewards
 
 | Action | XP Earned |
 |--------|-----------|
-| Solve an Easy problem | 50 XP |
-| Solve a Medium problem | 100 XP |
-| Solve a Hard problem | 200 XP |
-| Defeat a Boss Fight | 500 XP |
-| Daily streak bonus | +10 XP × streak day number |
+| Easy Problem Solved | 50 XP |
+| Medium Problem Solved | 100 XP |
+| Hard Problem Solved | 200 XP |
+| Boss Fight Victory | 500 XP |
 | First-attempt solve | +25 XP bonus |
 | Perfect AI evaluation (10/10) | +50 XP bonus |
+| Daily streak bonus | +10 XP × streak day |
 
 ### Level Progression
 
@@ -438,13 +456,41 @@ All LLM calls go through a routing layer that:
 
 ---
 
+## Design System
+
+### Color Palette
+
+| Color | Hex | Usage |
+|-------|-----|-------|
+| **Background** | `#0B0F1A` → `#12182B` | Gradient dark theme |
+| **Neon Blue** | `#4F9CF9` | Primary accent |
+| **Purple** | `#7C3AED` | Secondary accent |
+| **Pink** | `#EC4899` | Tertiary / Boss fights |
+| **Cyan** | `#22D3EE` | Success states |
+| **Success** | `#4ADE80` | Accepted submissions |
+| **Error** | `#FF6B6B` | Wrong answers |
+| **Warning** | `#FBBF24` | Caution states |
+
+### UI Principles
+
+- **Glassmorphism** — Blur + transparency panels
+- **Neon Glow** — Accent borders and shadows
+- **Smooth Animations** — Framer Motion transitions
+- **Responsive** — Mobile-first with bottom navigation
+
+---
+
 ## API Reference
+
+Once the backend is running, access interactive docs at:
+- **Swagger UI**: `http://localhost:8000/docs`
+- **ReDoc**: `http://localhost:8000/redoc`
 
 ### Problems
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/problems` | List problems with optional filters (`topic`, `difficulty`) |
+| `GET` | `/api/problems` | List problems with optional `topic` / `difficulty` filters |
 | `GET` | `/api/problems/{id}` | Get a single problem by ID |
 
 ### Submissions
@@ -452,8 +498,9 @@ All LLM calls go through a routing layer that:
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `POST` | `/api/submit` | Submit code — runs execution, AI evaluation, XP award, achievement check |
+| `GET` | `/api/submissions/history` | Get submission history |
 
-Request body:
+Request body for `POST /api/submit`:
 ```json
 {
   "problem_id": 42,
@@ -466,23 +513,22 @@ Request body:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/user/stats` | XP, level, streak, problems solved |
-| `GET` | `/api/user/submissions` | Submission history |
+| `GET` | `/api/users/me` | Get current user profile |
+| `GET` | `/api/users/stats` | XP, level, streak, problems solved |
 | `GET` | `/api/user/skills` | Skill dimension scores (radar chart data) |
 
 ### Challenges
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/challenge/next` | Generate the next adaptive challenge based on user's weaknesses |
+| `POST` | `/api/challenge/next` | Generate next adaptive challenge based on weaknesses |
 
 ### Leaderboard
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/api/leaderboard` | Global rankings sorted by XP |
-
-FastAPI automatically generates interactive API documentation at `/docs` (Swagger UI) and `/redoc`.
+| `GET` | `/api/skills/radar` | Get skill radar data |
 
 ---
 
@@ -490,20 +536,21 @@ FastAPI automatically generates interactive API documentation at `/docs` (Swagge
 
 ### Prerequisites
 
-- Node.js 18+
-- Python 3.10+
-- A Supabase account (free at supabase.com)
-- A Groq API key (free at console.groq.com)
-- A Google Gemini API key (free at aistudio.google.com)
+- **Node.js** 18+
+- **Python** 3.11+
+- **npm** or **pnpm**
+- A [Supabase](https://supabase.com) account (free)
+- A [Groq](https://console.groq.com) API key (free)
+- A [Google Gemini](https://aistudio.google.com) API key (free)
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/skillsprint.git
+git clone https://github.com/yourusername/skillsprint.git
 cd skillsprint
 ```
 
-### 2. Frontend setup
+### 2. Frontend Setup
 
 ```bash
 cd frontend
@@ -513,27 +560,31 @@ cp .env.example .env.local
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:3000`.
+Frontend will be available at **http://localhost:3000**
 
-### 3. Backend setup
+### 3. Backend Setup
 
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+
+# Activate virtual environment
+source venv/bin/activate        # macOS/Linux
+# venv\Scripts\activate         # Windows
+
 pip install -r requirements.txt
 cp .env.example .env
-# Fill in GROQ_API_KEY, GEMINI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_KEY
-uvicorn main:app --reload --port 8000
+# Fill in your API keys (see Environment Variables below)
+uvicorn main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`. Swagger docs at `http://localhost:8000/docs`.
+Backend will be available at **http://localhost:8000**
 
-### 4. Database setup
+### 4. Database Setup
 
-In your Supabase project, run the SQL schema from the [Database Schema](#database-schema) section above in the SQL editor.
+In your Supabase project's SQL Editor, run all the SQL from the [Database Schema](#database-schema) section above.
 
-### 5. Seed problems
+### 5. Seed Problems
 
 ```bash
 # Fetch problems from Codeforces
@@ -559,15 +610,24 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 ### Backend (`backend/.env`)
 
 ```env
-GROQ_API_KEY=your_groq_api_key
-GEMINI_API_KEY=your_gemini_api_key
+# Environment
+ENVIRONMENT=development
+
+# Database
+DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/skillsprint
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_KEY=your_supabase_service_role_key
+
+# AI API Keys
+GROQ_API_KEY=your_groq_api_key
+GEMINI_API_KEY=your_gemini_api_key
+
+# Code Execution
 PISTON_API_URL=https://emkc.org/api/v2/piston
 EXECUTION_TIMEOUT_SECONDS=10
 ```
 
-All API keys are free with no credit card required. See the links in the [Prerequisites](#prerequisites) section.
+All API keys are **free** with no credit card required.
 
 ---
 
@@ -580,27 +640,73 @@ cd frontend
 npx vercel --prod
 ```
 
-Set the same environment variables from `frontend/.env.local` in the Vercel project settings.
+Add all `NEXT_PUBLIC_*` environment variables in your Vercel project settings.
 
 ### Backend → Render (Free)
 
 1. Push the repository to GitHub
-2. Connect the repo to a new Render Web Service
-3. Set the root directory to `backend`
+2. Create a new Render Web Service connected to your repo
+3. Set root directory to `backend`
 4. Build command: `pip install -r requirements.txt`
 5. Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 6. Add all backend environment variables in Render's dashboard
 
-Note: Render's free tier spins down after 15 minutes of inactivity. For a production deployment, Railway's free credit tier or a paid Render plan is recommended.
+> **Note:** Render's free tier spins down after 15 minutes of inactivity. For production, Railway's free credit tier or a paid Render plan is recommended.
 
-### Database → Neondb (Free)
+### Infrastructure Summary
 
-No deployment needed — Supabase is already hosted. The free tier provides 500MB of database storage and unlimited API calls, which is more than sufficient for thousands of users.
-
-| Component | Platform | Free Tier Limit |
-|-----------|----------|-----------------|
-| Frontend | Local | Unlimited deploys |
+| Component | Platform | Free Tier |
+|-----------|----------|-----------|
+| Frontend | Vercel | Unlimited deploys |
 | Backend | Render | 750 hours/month |
-| Database | Neondb | 500MB, unlimited API calls |
+| Database | Supabase | 500MB, unlimited API calls |
 
 ---
+
+## Running Tests
+
+```bash
+# Frontend tests
+cd frontend
+npm run test
+
+# Backend tests
+cd backend
+pytest
+```
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+---
+
+## Acknowledgments
+
+- [Monaco Editor](https://microsoft.github.io/monaco-editor/) — VS Code's editor
+- [Piston API](https://github.com/engineer-man/piston) — Sandboxed code execution
+- [Groq](https://groq.com/) — Ultra-fast LLM inference
+- [Codeforces](https://codeforces.com/) — Problem dataset
+- [Lucide Icons](https://lucide.dev/) — Beautiful icons
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+
+**Built with ❤️ by the SkillSprint Team**
+
+⚡ *Enter the Arena. Level Up. Dominate.* ⚡
+
+</div>
